@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d1424">
+<title>سكة واحدة</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+
+/* Layout: one narrow column like a lantern-lit storybook page; a single committed night look. */
+:root{
+  --night:#0d1424;      /* page */
+  --deep:#141d33;       /* cards */
+  --line:#26314f;       /* hairlines */
+  --moon:#efe6d2;       /* main text, moonlit paper */
+  --mist:#9aa3bd;       /* secondary text */
+  --lantern:#e8a948;    /* accent: lantern light */
+  --hazem:#7fb3e6;      /* Hazem's color */
+  --rewan:#e79ab5;      /* Rewan's color */
+  --good:#8fd1a8;
+  --display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+html,body{background:var(--night);color:var(--moon)}
+body{font-family:var(--body);font-size:16px;line-height:1.85;direction:rtl;text-align:right;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px;
+  background-image:radial-gradient(ellipse 120% 60% at 50% -10%,#1d2a4a 0%,transparent 60%);background-attachment:fixed}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:0;line-height:1.2;color:var(--moon)}
+.brand small{display:block;font-family:var(--body);font-size:13px;font-weight:400;color:var(--mist)}
+.moon{width:44px;height:44px;border-radius:50%;flex:none;background:radial-gradient(circle at 38% 38%,#fff8e6,#e9d9b4 55%,#b9a77f);box-shadow:0 0 28px 6px rgba(232,169,72,.18)}
+.who{font-size:13px;color:var(--mist)}
+.who b{font-weight:600}
+.h{color:var(--hazem)} .r{color:var(--rewan)}
+.card{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:18px}
+h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:500;font-size:17px;margin:0 0 4px;color:var(--lantern)}
+p{margin:0}
+.muted{color:var(--mist);font-size:14px}
+.stories{display:grid;gap:12px}
+.story{all:unset;cursor:pointer;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start;background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:16px;transition:border-color .2s,transform .2s}
+.story:hover,.story:focus-visible{border-color:var(--lantern);transform:translateY(-1px)}
+.story:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+.story .em{font-size:30px;grid-row:span 2;line-height:1.3}
+.story .t{font-family:var(--display);font-size:19px;font-weight:700}
+.story .d{color:var(--mist);font-size:14px;line-height:1.7}
+.meter{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mist)}
+.bar{flex:1;height:8px;border-radius:8px;background:#0a0f1c;border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--hazem),var(--lantern),var(--rewan));transition:width .8s ease}
+.steps{display:flex;gap:5px;flex-wrap:wrap}
+.steps span{width:18px;height:6px;border-radius:4px;background:var(--line)}
+.steps span.done{background:var(--lantern)}
+.steps span.now{background:var(--moon)}
+.scene p.text{font-size:17px;line-height:2}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opt{all:unset;cursor:pointer;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#10182c;font-weight:500;transition:border-color .2s,background .2s}
+.opt:hover,.opt:focus-visible{border-color:var(--lantern);background:#18223c}
+.opt:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+.opt.mine{border-color:var(--lantern);background:#2a2412}
+.wait{display:flex;align-items:center;gap:10px;margin-top:14px;color:var(--mist);font-size:14px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--lantern);animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+.reveal{border-color:#3a4566}
+.picks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.pick{border-radius:10px;padding:10px 12px;background:#0f1628;border:1px solid var(--line);font-size:14px;min-width:0}
+.pick .n{font-weight:600;font-size:13px}
+.verdict{font-weight:600;margin-bottom:6px}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--rewan)}
+.flip{animation:flip .6s ease both}
+@keyframes flip{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;margin-top:12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0f1628;color:var(--moon);font:inherit;line-height:1.8}
+textarea:focus{outline:2px solid var(--lantern);outline-offset:1px}
+.btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:12px;background:var(--lantern);color:#1b1305;font-weight:600}
+.btn:focus-visible{outline:2px solid var(--moon);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--mist);border:1px solid var(--line)}
+.btn[disabled]{opacity:.5;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pocket{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--mist);border:1px dashed #4a4630;border-radius:12px;padding:12px;background:#151a22}
+.pocket b{color:var(--lantern);font-weight:600}
+.answers{display:grid;gap:10px;margin-top:12px}
+.ans{border-radius:12px;padding:12px;background:#0f1628;border:1px solid var(--line);white-space:pre-wrap;word-break:break-word}
+.ans .n{font-weight:600;font-size:13px;display:block;margin-bottom:4px}
+details{border-top:1px solid var(--line);padding-top:10px}
+summary{cursor:pointer;color:var(--mist);font-size:14px}
+.log{display:grid;gap:10px;margin-top:10px;font-size:14px;color:#cfc6b2}
+.log div{border-right:2px solid var(--line);padding-right:10px}
+.end{text-align:center}
+.end .pct{font-family:var(--display);font-size:54px;color:var(--lantern);line-height:1.1}
+.end h2{margin-top:6px}
+.hist{display:grid;gap:8px;margin-top:8px}
+.hist div{display:flex;justify-content:space-between;gap:10px;font-size:14px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.hist div span:last-child{color:var(--lantern);font-variant-numeric:tabular-nums}
+.confirm{margin-top:10px;font-size:14px}
+.err{color:var(--rewan)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+.field{display:grid;gap:6px}
+.field label{font-size:14px;color:var(--mist)}
+input[type=text],input[type=tel]{width:100%;box-sizing:border-box;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:#0f1628;color:var(--moon);font:inherit}
+input:focus{outline:2px solid var(--lantern);outline-offset:1px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#10182c;font-size:14px}
+.seg button.on{border-color:var(--lantern);background:#2a2412;color:var(--lantern)}
+.seg button:focus-visible{outline:2px solid var(--lantern)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.two{grid-template-columns:1fr}}
+.story.on{border-color:var(--lantern);background:#1d1a12}
+.code{font-family:var(--display);font-size:46px;letter-spacing:6px;color:var(--lantern);text-align:center;direction:ltr}
+.link{direction:ltr;text-align:left;font-size:13px;color:var(--mist);word-break:break-all;background:#0f1628;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.net{font-size:12px;color:var(--mist);display:flex;align-items:center;gap:6px}
+.net i{width:8px;height:8px;border-radius:50%;background:var(--good)}
+.net.off i{background:var(--rewan)}
+.timer{font-variant-numeric:tabular-nums;color:var(--lantern);font-weight:600}
+a.btn{text-decoration:none}
+
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="card"><p class="muted">بيفتح…</p></div></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="config.js"></script>
+<script>
+const STORIES = {
+  island: {
+    em: '🏝', title: 'الجزيرة',
+    blurb: 'صحيتوا على شط جزيرة مش عارفين جيتوا إزاي، وفيه رسايل متسابة ليكم.',
+    intro: 'صحيتوا على صوت موج. رملة دافية، وسما رمادي، ومركب صغير مكسور على الشط. محدش فيكم فاكر جه هنا إزاي. وجنب كل واحد فيكم ورقة مطبّقة مكتوب عليها اسم التاني، بخط إيد محدش يعرفه.',
+    items: ['بوصلة صغيرة، إبرتها مش بتشاور على الشمال، بتشاور على حاجة جوه الجزيرة', 'صورة قديمة ليكم إنتوا الاتنين، في مكان عمركم ما رحتوه', 'مفتاح نحاس صغير محفور عليه رقم 7', 'ولّاعة قديمة محفور عليها اسم مركب: «النورس»'],
+    scenes: [
+      { t: 'الشمس بتغيب بسرعة غريبة، والهوا بقى ساقع. لازم تقرروا تعملوا إيه قبل الضلمة.',
+        o: [
+          { t: 'نولّع نار على الشط', s: 'لمّيتوا خشب من المركب المكسور وولّعتوا نار. الدفا رجّع لكم شوية أمان، ومن بعيد حد ولّع نار تانية كأنه بيرد عليكم.' },
+          { t: 'ندخل الغابة ندوّر على مكان نبات فيه', s: 'لقيتوا تجويف في صخرة كبيرة جوه الغابة. على حيطته متشخبط سهم ومكتوب جنبه: «مش أول مرة».' },
+          { t: 'نفتّش المركب المكسور', s: 'تحت الألواح لقيتوا شنطة مية وبطانية، وكراسة مبلولة آخر صفحة فيها: «لو قريتوا ده، يبقى لسه فيه وقت».' } ],
+        d: 'كل واحد شد في ناحية، ولقيتوا نفسكم بتنادوا على بعض في الضلمة لحد ما اتلميتوا تاني. الجزيرة دي واضح إنها مش بتحب حد يمشي لوحده.' },
+      { t: 'الصبح لقيتوا أثر رجلين على الرملة، طالع من البحر ورايح ناحية الصخور. حد كان واقف جنبكم وإنتوا نايمين.',
+        o: [
+          { t: 'نمشي ورا الأثر', s: 'الأثر وقف فجأة عند صخرة عليها نفس الخط اللي على الورقتين: «إنتوا قريبين».' },
+          { t: 'نستخبى ونراقب', s: 'استخبيتوا ساعة. محدش جه، بس الأثر اتمسح لوحده قدام عينيكم، من غير موج.' },
+          { t: 'ننادي بصوت عالي', s: 'ناديتوا. الصدى رجع بصوت مختلف، ونطق اسم كل واحد فيكم بالعكس.' } ],
+        d: 'اختلفتوا، وواحد فيكم بص على الأثر والتاني بص على البحر. في اللحظة دي شفتوا الاتنين نفس الحاجة من مكانين مختلفين: خيال طويل بيبص عليكم من فوق الصخور.' },
+      { t: 'جوه الغابة لقيتوا صندوق خشب عليه قفل بأرقام، تلات خانات. ورا الورقتين اللي معاكم أرقام ممسوحة نصها.',
+        o: [
+          { t: 'نجمع نص الرقم ده على نص الرقم ده ونجرّب', s: 'الرقمين مع بعض كمّلوا بعض: 7… 1… 4. القفل فتح، وجوه الصندوق خريطة للجزيرة، فيها فنار متعلّم عليه بقلب صغير.' },
+          { t: 'نسيبه ونكمّل', s: 'سيبتوه. وإنتوا ماشيين سمعتوا القفل بيتفتح لوحده من وراكم. لما رجعتوا لقيتوا الصندوق فاضي وعليه ورقة: «المرة الجاية».' },
+          { t: 'نشيله معانا', s: 'الصندوق كان أخف من المتوقع، وكان بيخبط خبطة خفيفة من جوه كأنه بيرد على خطواتكم.' } ],
+        d: 'واحد عايز يفتح والتاني عايز يمشي. اتخانقتوا خناقة صغيرة، وبعدها ضحكتوا لما القفل فتح لوحده من غير ما حد يلمسه.' },
+      { t: 'بالليل سمعتوا مزيكا جاية من جوه الجزيرة. أغنية قديمة حد فيكم سمعها قبل كده، ومش فاكر فين.',
+        o: [
+          { t: 'نروح ناحية الصوت', s: 'وصلتوا لساحة فيها جرامافون شغال لوحده. أول ما قربتوا الأغنية وقفت، وبدأت أغنية تانية، أغنية بتحبها {G}.' },
+          { t: 'نبعد عن الصوت', s: 'بعدتوا، بس الصوت فضل ماشي معاكم بنفس المسافة. لحد ما وقفتوا، فوقف.' },
+          { t: 'نقعد نسمع من مكاننا لحد الصبح', s: 'قعدتوا جنب بعض تسمعوا. ومع آخر أغنية حسيتوا إن الجزيرة نفسها هديت.' } ],
+        d: 'كل واحد كان عايز حاجة. وفي الآخر الأغنية هي اللي قررت عنكم: سكتت، وفضل صوت الموج والكلام اللي بينكم.' },
+      { secret: true, t: 'قعدتوا ترتاحوا جنب نار صغيرة. كل واحد فيكم حاسس بالحاجة اللي في جيبه من ساعة ما صحي، وكأنها بتتقل.',
+        o: [ { t: 'أطلّع اللي في جيبي وأوريه' }, { t: 'أخليها معايا دلوقتي' } ] },
+      { comp: true, t: 'وصلتوا للفنار. السلم الحديد مكسور من النص. واحد بس يقدر يطلع على كتف التاني، والتاني لازم يفضل تحت ويسنده.',
+        o: [ { t: 'أنا اللي أطلع' }, { t: 'أنا اللي أسند' } ],
+        good: 'واحد طلع والتاني سند، من غير كلام كتير. فوق لقيتوا نور الفنار لسه شغال، كأنه كان مستنيكم.',
+        bad: 'الاتنين عملوا نفس الحاجة، فوقفتوا قدام السلم مش عارفين. أخدتوا وقت لحد ما اتفقتوا، والنور فوق اتطفى ورجع ولّع كأنه بيستعجلكم.' },
+      { t: 'فوق في الفنار دفتر قديم، مكتوب في أول صفحة: «اللي يوصلوا هنا مع بعض، يمشوا من هنا مع بعض». وتحته أسامي كتير.',
+        o: [
+          { t: 'نكتب أسامينا جنب بعض', s: 'كتبتوا أسامينا. الحبر لمع لحظة، والدفتر قلب لوحده لصفحة بيضا عليها رسمة لمركب.' },
+          { t: 'ناخد الصفحة معانا', s: 'قطعتوا الصفحة وطبقتوها. وإنتوا نازلين لاحظتوا إن الأسامي اللي فيها بقت أقل.' },
+          { t: 'نسيب الدفتر زي ما هو', s: 'سيبتوه مفتوح. الهوا قلّب صفحاته، ووقف عند صفحة مكتوب فيها بخط جديد: «{H} و{G}، قريب».' } ],
+        d: 'واحد مد إيده للقلم والتاني مد إيده للدفتر، وإيديكم خبطت في بعض. الدفتر وقع مفتوح على صفحة فيها رسمة لاتنين واقفين على نفس الشط.' },
+      { t: 'الفجر. مركب صغير بشراع أبيض بيقرّب من الشط، ومحدش فيه.',
+        o: [
+          { t: 'نجري عليه مع بعض', s: 'ركبتوا، والمركب اتحرك لوحده ناحية الشمس.' },
+          { t: 'نستنى ونشوف مين اللي بعته', s: 'استنيتوا. المركب وقف قدامكم بالظبط، وكأنه هو كمان مستنيكم تقرروا.' },
+          { t: 'نرجع للفنار', s: 'رجعتوا الفنار. من فوق شفتوا المركب بيلف حوالين الجزيرة مرة، ومشي، وساب على الشط حاجة بتلمع.' } ],
+        d: 'اختلفتوا في آخر لحظة. وقفتوا على الشط تبصوا لبعض، والمركب فضل مستني، مش هيمشي من غير الاتنين.' }
+    ],
+    qs: [
+      'لو المغامرة دي حقيقية، إيه أكتر حاجة كانت هتخوّفك فيها؟',
+      'إيه حاجة صغيرة بتفرّحك، وناس كتير ما تاخدش بالها منها؟',
+      'لو هتاخد حاجة واحدة بس معاك على جزيرة، هتكون إيه وليه؟'
+    ],
+    endings: [
+      { min: 80, t: 'سكة واحدة فعلاً', x: 'المركب وصل بيكم لشط تاني، والشمس طالعة. الورقتين اللي كانوا معاكم اتمحى منهم كل حاجة إلا جملة واحدة: «لقيتوا بعض قبل ما تلاقوا الطريق». الجزيرة كانت بتختبر حاجة واحدة، وإنتوا عدّيتوها.' },
+      { min: 55, t: 'الشط التاني', x: 'وصلتوا، بس كل واحد فيكم فاكر الرحلة بشكل مختلف شوية، وده خلّى الحكاية أحلى لما حكيتوها لبعض. الجزيرة سابت لكم البوصلة كهدية، وإبرتها دلوقتي بتشاور على بعض.' },
+      { min: 30, t: 'لسه بنتعرف', x: 'المركب مشي بيكم، بس في نص البحر وقف. الجزيرة لسه شايفة إن فيه حاجات ما اتقالتش. ممكن ترجعوا لها تاني… وتختاروا غير المرة دي.' },
+      { min: 0, t: 'جزيرتين', x: 'كل واحد فيكم صحي على شط لوحده. بس على الرملة جنب كل واحد، لقى رسمة لسهم بيشاور ناحية التاني. المغامرة دي مش بتخلص غير لما تمشوها مع بعض، جرّبوا تاني.' }
+    ]
+  },
+  house: {
+    em: '🏚', title: 'البيت القديم',
+    blurb: 'ورثتوا مع بعض بيت قديم في بحري بإسكندرية، وكل أوضة فيه وراها سر.',
+    intro: 'جواب من محامي ما تعرفوهوش: «ورثتوا إنتوا الاتنين، مع بعض، بيت في بحري». الباب الخشب تقيل، والبيت ريحته فل وتراب، والبحر سامع صوته من الشبابيك. على الترابيزة في المدخل مفتاحين، واحد عليه اسم {H}، والتاني عليه اسم {G}.',
+    items: ['مفتاح صغير مكتوب عليه «السطوح»', 'جواب مقفول، مكتوب على ظرفه بخط قديم «للي هيفتحوا البيت»', 'صورة قديمة لشباك البيت بالليل، ونوره والع', 'ساعة جيب واقفة على 3:15'],
+    scenes: [
+      { t: 'الصالة واسعة، والكراسي مغطية بملايات بيضا، وفي الركن بيانو قديم عليه غطا قطيفة.',
+        o: [
+          { t: 'نشيل الغطا ونجرّب البيانو', s: 'أول نغمة طلعت سليمة رغم التراب، والنور في النجفة نوّر لوحده لحظة كأن البيت فاق.' },
+          { t: 'نفتح الشبابيك', s: 'هوا البحر دخل والملايات طارت. تحت واحدة منهم كرسي محفور عليه حرفين: ح و ر.' },
+          { t: 'نطلع على السلم على طول', s: 'السلم بيزيّق مع كل خطوة، بس في الدرجة السابعة الصوت سكت خالص، ولقيتوا تحتها درج صغير.' } ],
+        d: 'كل واحد راح ناحية، وفجأة الاتنين سمعتوا نفس الجملة جاية من البيانو والشباك في نفس الوقت: «أخيراً».' },
+      { t: 'في أوضة النوم دولاب كبير جواه فساتين وبدل قديمة، متعلقة كأن أصحابها لسه هيرجعوا.',
+        o: [
+          { t: 'نجرّب نلبس حاجة', s: 'لبستوا وبصيتوا في المراية. المراية وراكم إنتوا، بس في صورة قديمة، والصورة ابتسمت قبلكم بثانية.' },
+          { t: 'نفتش الجيوب', s: 'في جيب بدلة لقيتوا تذكرة سينما قديمة لاتنين، وفي جيب فستان منديل مطرز عليه نفس التاريخ.' },
+          { t: 'نقفل الدولاب ونسيبه', s: 'قفلتوه. وإنتوا خارجين سمعتوا شماعة بتتحرك جوه، كأن حد بيختار هيلبس إيه.' } ],
+        d: 'واحد فيكم فتح والتاني قفل، والباب فضل رايح جاي بينكم لحد ما وقعت منه صورة صغيرة: اتنين بيضحكوا على كورنيش إسكندرية.' },
+      { t: 'الساعة 12 بالليل جرس الباب رن. البيت مقفول من جوه، ومحدش يعرف إنكم هنا.',
+        o: [
+          { t: 'نفتح الباب', s: 'محدش برا. على العتبة علبة جاتوه صغيرة من محل قديم في محطة الرمل، ومعاها كارت: «أهلاً بيكم».' },
+          { t: 'نبص من العين السحرية', s: 'شفتوا ضهر حد ماشي على السلم بهدوء، لابس بالطو قديم. التفت مرة، ورفع إيده بالسلام.' },
+          { t: 'نعمل نفسنا مش هنا', s: 'سكتّوا. الجرس رن مرة كمان، وبعدين حد زق جواب من تحت الباب، فيه رسمة للبيت وكل شبابيكه منورة.' } ],
+        d: 'اختلفتوا، فقعدتوا تتهامسوا ورا الباب. ومن الناحية التانية حد ضحك ضحكة خفيفة، وقال بصوت واطي: «زي زمان بالظبط».' },
+      { t: 'آخر الطرقة أوضة بابها مقفول، ومن تحته طالعة ريحة ياسمين.',
+        o: [
+          { t: 'ندوّر على مفتاحها', s: 'لقيتوا المفتاح متعلق ورا برواز في الصالة. الأوضة جواها مكتب صغير وكرسيين، وعلى المكتب دفتر مكتوب عليه «الحكاية».' },
+          { t: 'نكتب ورقة ونزقها من تحت الباب', s: 'كتبتوا «إحنا هنا». بعد دقيقة الورقة رجعت من تحت الباب، ومكتوب تحتها: «عارفة».' },
+          { t: 'نسيبها لبكرة', s: 'سيبتوها. بالليل ريحة الياسمين ملت البيت كله، وكل واحد فيكم حلم بنفس الحلم.' } ],
+        d: 'واحد عايز يفتح دلوقتي والتاني عايز يستنى. الباب حسم الموضوع، وفتح نص فتحة بس.' },
+      { secret: true, t: 'قعدتوا على سلم البيت تشربوا شاي. كل واحد فيكم حاسس بالحاجة اللي لقاها في جيبه من أول ما دخلتوا.',
+        o: [ { t: 'أطلّع اللي في جيبي وأوريه' }, { t: 'أخليها معايا دلوقتي' } ] },
+      { comp: true, t: 'على السطوح صندوق حديد كبير، والدنيا ضلمة. لازم واحد يمسك الكشاف، والتاني يفتح الصندوق.',
+        o: [ { t: 'أنا أمسك الكشاف' }, { t: 'أنا أفتح الصندوق' } ],
+        good: 'واحد نوّر والتاني فتح. جوه الصندوق فانوس رمضان قديم، وجواب: «البيت ده بيتعمر بالاتنين».',
+        bad: 'الاتنين عايزين نفس الدور، والكشاف وقع واتطفى. فتحتوا الصندوق في الضلمة، والفانوس اللي جواه نوّر لوحده.' },
+      { t: 'في الدفتر لقيتوا صورة الست اللي ورّثتكم البيت. ابتسامتها مألوفة، كأنكم تعرفوها من زمان.',
+        o: [
+          { t: 'نعلّق صورتها في الصالة', s: 'علقتوها، والنجفة نورت كلها لأول مرة. حتى البيانو طلّع نغمة لوحده.' },
+          { t: 'نحطها في الدفتر ونحتفظ بيها', s: 'حطيتوها في الدفتر، والدفتر اتقفل لوحده بهدوء، كأنه كان مستني اللحظة دي.' },
+          { t: 'نسأل الجيران عليها', s: 'جارة عجوزة قالتلكم: «كانت دايماً تقول: البيت ده هيروح لاتنين لسه ما يعرفوش إنهم شبه بعض».' } ],
+        d: 'كل واحد شاف حاجة في الصورة غير التاني. واحد شاف ابتسامتها، والتاني شاف إن وراها في الخلفية نفس الكورنيش اللي في الصورة الصغيرة.' },
+      { t: 'الصبح. البيت بقى منوّر ونضيف، والمحامي هيعدّي بعد ساعة يعرف قراركم.',
+        o: [
+          { t: 'نخليه بيتنا ونيجي له مع بعض', s: 'قلتوا للمحامي: «البيت مش للبيع». ابتسم وطلّع من شنطته مفتاح تالت، مكتوب عليه «للاتنين».' },
+          { t: 'نصلّحه ونفتحه للناس', s: 'قررتوا تخلوه مكان للحكايات، مكتبة صغيرة وقهوة. والبيت كأنه فرح، كل الشبابيك فتحت مرة واحدة.' },
+          { t: 'نقفله ونسيبه زي ما هو', s: 'قفلتوه بهدوء. وإنتوا ماشيين، شباك واحد بس فضل منوّر.' } ],
+        d: 'اختلفتوا، والمحامي ضحك وقال: «الست قالتلي إنكم هتختلفوا، وقالتلي أسيبكم تتفقوا براحتكم».' }
+    ],
+    qs: [
+      'لو عندك أوضة سرية في بيت، كنت هتحط فيها إيه؟',
+      'إيه أكتر ريحة أو أغنية بترجّعك لذكرى حلوة؟',
+      'إيه حاجة بتتمنى تعملها مرة واحدة على الأقل في حياتك؟'
+    ],
+    endings: [
+      { min: 80, t: 'البيت اتعمّر', x: 'البيت نوّر كله، وعلى الباب ظهرت يافطة نحاس صغيرة عليها اسمين. الدفتر اللي كان اسمه «الحكاية» بقى فيه صفحة جديدة بخطكم إنتوا: البداية.' },
+      { min: 55, t: 'شبابيك مفتوحة', x: 'مش كل الأسرار اتكشفت، بس البيت بقى بيضحك. كل مرة حد فيكم بيفتح شباك، التاني بيلاقي نفسه بيفتح اللي جنبه.' },
+      { min: 30, t: 'أوض لسه مقفولة', x: 'البيت ادّالكم مفاتيح أوضتين بس. الباقي مستني. الجارة العجوزة قالت: «البيوت القديمة بتفتح على مهلها، زي الناس بالظبط».' },
+      { min: 0, t: 'بيتين', x: 'كل واحد خد مفتاحه ومشي. بس المفتاحين، كل ما يتحطوا جنب بعض، يرنّوا رنة خفيفة. البيت لسه مستنيكم، جرّبوا تاني.' }
+    ]
+  },
+  train: {
+    em: '🚂', title: 'آخر قطر',
+    blurb: 'ركبتوا آخر قطر من محطة مصر بالليل، ومش بيقف غير في محطات مالهاش اسم.',
+    intro: 'محطة مصر، الساعة 11:59 بالليل. القطر الأخير واقف على رصيف مش مكتوب رقمه. كل واحد فيكم وصل بتذكرة ما يفتكرش اشتراها، والكرسيين اللي على التذكرتين جنب بعض بالظبط.',
+    items: ['تذكرة لمحطة مش موجودة على أي خريطة', 'كتاب ناقص آخر صفحة', 'شمسية سودا مع إن الجو صافي', 'كاميرا قديمة فيها صورة واحدة بس'],
+    scenes: [
+      { t: 'القطر اتحرك، والكمساري دخل. وشه مش واضح مهما بصيتوا، وبيمد إيده للتذاكر.',
+        o: [
+          { t: 'نديله التذاكر', s: 'خرم التذكرتين في نفس المكان، وقال بصوت هادي: «أخيراً اتنين في نفس الميعاد».' },
+          { t: 'نسأله القطر رايح فين', s: 'ابتسم وقال: «على حسبكم». ومشي من غير ما ياخد التذاكر.' },
+          { t: 'نروح لعربية تانية', s: 'العربية التانية فاضية، بس على كل الكراسي ورق مكتوب عليه «محجوز»، إلا كرسيين جنب الشباك.' } ],
+        d: 'واحد مد التذكرة والتاني شدها. الكمساري ضحك وقال: «العربية دي بتاعتكم، اتفقوا براحتكم».' },
+      { t: 'عربية البوفيه فيها راجل عجوز بيعمل شاي على سبرتاية، وبيشاور لكم تقعدوا.',
+        o: [
+          { t: 'نقعد نسمع حكايته', s: 'حكى عن اتنين ركبوا القطر ده من خمسين سنة، ونزلوا مع بعض في محطة اسمها «الفجر». وفي الآخر غمز لكم.' },
+          { t: 'نشكره ونمشي', s: 'وإنتوا ماشيين قال بصوت عالي: «الشاي هيفضل سخن لما ترجعوا».' },
+          { t: 'نسأله يعرفنا منين', s: 'بص لكم شوية وقال: «أنا ما أعرفكمش، بس القطر يعرفكم».' } ],
+        d: 'واحد قعد والتاني فضل واقف. العجوز صب كوبايتين وقال: «القطر ده ما بيتحركش غير لما الاتنين يقعدوا». وفعلاً، القطر هدّى.' },
+      { t: 'القطر وقف في محطة مالهاش يافطة. الباب مفتوح، والرصيف عليه فوانيس والعة ومحدش هناك.',
+        o: [
+          { t: 'ننزل نتفرج', s: 'على الرصيف لقيتوا صندوق جوابات قديم، فيه جواب واحد متبعت لاسميكم إنتوا الاتنين.' },
+          { t: 'نفضل في القطر', s: 'من الشباك شفتوا الفوانيس بتطفى واحدة ورا التانية، لحد ما القطر اتحرك.' },
+          { t: 'نبص من الشباك بس', s: 'شفتوا على الرصيف اتنين شبهكم بالظبط، بيشاوروا لكم ويضحكوا.' } ],
+        d: 'واحد نزل والتاني فضل جوه، والقطر صفّر. اللي نزل جري ورجع في آخر ثانية، واللي جوه كان ماسك الباب.' },
+      { t: 'النور قطع فجأة، والقطر دخل نفق طويل جداً.',
+        o: [
+          { t: 'نمسك إيد بعض', s: 'في الضلمة صوت العجلات بقى هادي، وأول ما خرجتوا من النفق لقيتوا السما مليانة نجوم.' },
+          { t: 'نولّع كشاف الموبايل', s: 'النور وراكم إن كل الكراسي حواليكم بقت مليانة ناس نايمين، ولما النور رجع، فضيت تاني.' },
+          { t: 'نقعد ساكتين لحد ما يخلص', s: 'السكوت كان مريح. ومع آخر النفق حسيتوا إن الوقت عدّى أسرع من اللازم.' } ],
+        d: 'واحد مد إيده والتاني دوّر على الموبايل، والإيدين اتقابلوا في الضلمة بالصدفة. ولا حد علّق.' },
+      { secret: true, t: 'القطر رجع يجري بهدوء. كل واحد فيكم حاطط إيده على جيبه، على الحاجة اللي كانت معاه من أول ما ركب.',
+        o: [ { t: 'أطلّع اللي في جيبي وأوريه' }, { t: 'أخليها معايا دلوقتي' } ] },
+      { comp: true, t: 'القطر بيسرّع بزيادة، وفيه كوبري قدام. لازم واحد يشد فرامل الطوارئ، والتاني يمسك باب العربية اللي اتفتح.',
+        o: [ { t: 'أنا أشد الفرامل' }, { t: 'أنا أمسك الباب' } ],
+        good: 'واحد شد والتاني مسك، والقطر هدّى على الكوبري بالظبط. تحتيكم النيل بينوّر.',
+        bad: 'الاتنين جريتوا على نفس الحاجة. القطر عدّى الكوبري وهو بيتهز، والباب فضل يخبط، لحد ما مسكتوه مع بعض.' },
+      { t: 'آخر عربية في القطر فيها كرسيين بس، مكتوب على كل واحد اسم.',
+        o: [
+          { t: 'نقعد', s: 'قعدتوا، والشباك ورّاكم شروق مش من الدنيا دي. الكرسيين كانوا مريحين بشكل غريب، كأنهم معمولين ليكم.' },
+          { t: 'نرجع لعربية البوفيه', s: 'رجعتوا للعجوز. ضحك وقال: «عارف، أنا كمان رجعت أول مرة». والشاي كان لسه سخن.' },
+          { t: 'نصوّر الكرسيين', s: 'الصورة طلعت فيها إنتوا الاتنين قاعدين، مع إنكم كنتوا واقفين.' } ],
+        d: 'واحد قعد والتاني وقف يتفرج. الكرسي الفاضي اتحرك سنتي لوحده، كأنه بيقول «تعالى».' },
+      { t: 'القطر بيهدّي. على الرصيف يافطة: «الفجر». والكمساري واقف على الباب.',
+        o: [
+          { t: 'ننزل مع بعض', s: 'نزلتوا، والقطر صفّر صفارة طويلة، كأنه بيودّعكم.' },
+          { t: 'نكمّل لآخر الخط', s: 'كمّلتوا، والكمساري قال: «آخر الخط بقى بيتكوا». والقطر لف ورجع على محطة مصر.' },
+          { t: 'نسأل الكمساري هو مين', s: 'شال الكاب. كان هو العجوز بتاع البوفيه، وقال: «أنا اللي استنيت معاكم».' } ],
+        d: 'اختلفتوا على الرصيف. الكمساري قال: «القطر ده بيستنى. ده الوحيد في البلد اللي بيستنى».' }
+    ],
+    qs: [
+      'لو تقدر تركب قطر لأي زمن، هتروح لأنهي سنة وليه؟',
+      'إيه حاجة الناس فاكرينها عنك وهي مش صح؟',
+      'إيه أحلى مكان قعدت فيه وحسيت إن الوقت وقف؟'
+    ],
+    endings: [
+      { min: 80, t: 'محطة الفجر', x: 'نزلتوا على رصيف الفجر، والقطر مشي من غير صوت. على الدكة جنبكم تذكرتين جداد، رايح جاي، مكتوب عليهم: «في أي وقت». بعض الرحلات بتبدأ من آخر الخط.' },
+      { min: 55, t: 'نفس الكرسيين', x: 'وصلتوا، ولسه كل واحد عنده أسئلة عن التاني، وده أحلى ما في الرحلة. العجوز ادّالكم كوبايتين الشاي هدية، وقال: «المرة الجاية هتقعدوا أكتر».' },
+      { min: 30, t: 'محطة ترانزيت', x: 'القطر وقف بيكم في محطة نص الطريق. لسه فيه مسافة، والقطر مش مستعجل. الكمساري قال: «القطر ده بيستنى، ارجعوا له».' },
+      { min: 0, t: 'قطرين', x: 'كل واحد صحي في عربية لوحده. بس على شباك كل عربية، حد كاتب بنفَسه اسم التاني. القطر لسه بيلف، اركبوه تاني.' }
+    ]
+  }
+};
+
+
+
+/* ===================== أدوات ===================== */
+const $app = document.getElementById('app');
+const LS = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { } } };
+let myId = LS.get('sekka_id'); if (!myId) { myId = 'u' + Math.random().toString(36).slice(2, 12); LS.set('sekka_id', myId); }
+const SITE = /github\.io$/.test(location.hostname) ? location.href.split('#')[0] : (window.SITE_URL || location.href.split('#')[0]);
+function el(tag, attrs, ...kids) { const e = document.createElement(tag); if (attrs) for (const [k, v] of Object.entries(attrs)) { if (k === 'class') e.className = v; else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else if (v !== false && v != null) e.setAttribute(k, v); } for (const k of kids.flat()) if (k != null && k !== false) e.append(k.nodeType ? k : document.createTextNode(String(k))); return e; }
+const hash = s => { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+
+/* ===================== Firebase ===================== */
+let db = null, online = true;
+try { firebase.initializeApp(window.FIREBASE_CONFIG); db = firebase.database(); db.ref('.info/connected').on('value', s => { online = !!s.val(); const n = document.getElementById('net'); if (n) { n.className = 'net' + (online ? '' : ' off'); n.lastChild.textContent = online ? 'متصل' : 'مش متصل… بيحاول تاني'; } }); } catch (e) { db = null; }
+
+/* ===================== الحالة ===================== */
+let view = 'home', code = null, room = null, role = null, unsub = null, busy = false, errText = '', confirmNew = false, lastShown = -1, endShown = null;
+const savedHist = new Set();
+const form = { story: 'island', hn: 'حازم', hg: 'm', gn: 'ريوان', gg: 'f', len: 8, qs: true, secret: true, timer: 0 };
+try { Object.assign(form, JSON.parse(LS.get('sekka_form') || '{}')); } catch (e) { }
+
+const S = () => room && room.settings;
+const NAMES = () => ({ host: S().hn || 'لاعب 1', guest: S().gn || 'لاعب 2' });
+const G = r => (r === 'host' ? S().hg : S().gg) === 'f';
+const OTHER = r => r === 'host' ? 'guest' : 'host';
+const chose = r => G(r) ? 'اختارت' : 'اختار';
+const waitFor = r => 'مستنيين ' + NAMES()[r] + (G(r) ? ' تختار' : ' يختار');
+const waitAns = r => 'مستنيين ' + NAMES()[r] + (G(r) ? ' تجاوب' : ' يجاوب');
+const pocketWord = r => G(r) ? 'خلّتها في جيبها 🤐' : 'خلّاها في جيبه 🤐';
+const tpl = t => String(t).replace(/\{H\}/g, NAMES().host).replace(/\{G\}/g, NAMES().guest);
+const cls = r => r === 'host' ? 'h' : 'r';
+const nameEl = r => el('b', { class: cls(r) }, NAMES()[r]);
+
+function stepsOf(set) {
+  let sc = set.len == 5 ? [0, 2, 4, 5, 7] : [0, 1, 2, 3, 4, 5, 6, 7];
+  if (!set.secret) sc = sc.filter(i => i !== 4);
+  const qAfter = !set.qs ? [] : sc.length >= 7 ? [1, 3, sc.length - 2] : [1, sc.length - 2];
+  const out = []; let q = 0;
+  sc.forEach((i, k) => { out.push({ k: 'scene', i }); if (qAfter.includes(k) && q < 3) out.push({ k: 'q', i: q++ }); });
+  return out;
+}
+const movesOf = r => (room && room.moves && room.moves[room.gid] && room.moves[room.gid][r]) || {};
+const val = (m, i) => m[i] ? m[i].v : undefined;
+const itemOf = r => { const it = STORIES[S().story].items, a = hash(room.gid) % it.length; return r === 'host' ? it[a] : it[(a + 1 + hash(room.gid + 'r') % (it.length - 1)) % it.length]; };
+
+function progress() {
+  const steps = stepsOf(S()), A = movesOf('host'), B = movesOf('guest');
+  let cur = steps.findIndex((st, i) => val(A, i) === undefined || val(B, i) === undefined); if (cur < 0) cur = steps.length;
+  let matched = 0, scored = 0;
+  steps.forEach((st, i) => { if (i >= cur || st.k !== 'scene') return; const sc = STORIES[S().story].scenes[st.i], a = val(A, i), b = val(B, i);
+    if (sc.secret) { if (a === 0 && b === 0) { matched++; scored++; } } else if (sc.comp) { scored++; if (a !== b) matched++; } else { scored++; if (a === b) matched++; } });
+  const startAt = i => i === 0 ? room.startedAt : Math.max((A[i - 1] || {}).at || 0, (B[i - 1] || {}).at || 0);
+  return { steps, cur, A, B, harmony: scored ? Math.round(100 * matched / scored) : 50, matched, scored, startAt };
+}
+
+function outcomeOf(i, pr) {
+  const st = pr.steps[i], SS = STORIES[S().story]; if (st.k === 'q') return null;
+  const sc = SS.scenes[st.i], a = val(pr.A, i), b = val(pr.B, i);
+  if (sc.secret) {
+    const show = r => el('div', { class: 'pick' }, el('span', { class: 'n ' + cls(r) }, NAMES()[r]), el('div', null, (r === 'host' ? a : b) === 0 ? 'طلّع: ' + itemOf(r) : pocketWord(r)));
+    let text = a === 0 && b === 0 ? 'الاتنين طلّعوا اللي معاهم. أول ما الحاجتين بقوا جنب بعض، فهمتوا إنهم حتتين من نفس الحكاية. فيه حاجة اتفتحت بينكم.' : (a === 0 || b === 0) ? 'واحد بس اللي كشف اللي معاه. التاني ابتسم وما قالش حاجة، بس كان باين إنه قدّر ده جداً.' : 'الاتنين قرروا يحتفظوا بسرهم دلوقتي. الحاجتين فضلوا في الجيوب، وتقلهم بقى أخف شوية.';
+    return { verdict: a === 0 && b === 0 ? ['ok', '🔓 الاتنين كشفوا'] : null, picks: [show('host'), show('guest')], text };
+  }
+  const pk = r => { const v = r === 'host' ? a : b; return el('div', { class: 'pick' }, el('span', { class: 'n ' + cls(r) }, NAMES()[r] + ' ' + chose(r)), el('div', null, sc.o[v] ? sc.o[v].t : '—')); };
+  const good = sc.comp ? a !== b : a === b;
+  const text = sc.comp ? (good ? sc.good : sc.bad) : (good ? sc.o[a].s : sc.d);
+  return { verdict: good ? ['ok', sc.comp ? '✨ كمّلتوا بعض' : '✨ نفس الاختيار'] : ['no', sc.comp ? '🌀 الاتنين عملوا نفس الحاجة' : '🌀 اختلفتوا'], picks: [pk('host'), pk('guest')], text: tpl(text) };
+}
+
+/* ===================== Firebase actions ===================== */
+function flashErr(t) { errText = t; render(); setTimeout(() => { errText = ''; render(); }, 5000); }
+async function createRoom() {
+  if (busy || !db) return; busy = true; render();
+  LS.set('sekka_form', JSON.stringify(form));
+  const settings = { story: form.story, hn: form.hn.trim().slice(0, 20) || 'لاعب 1', hg: form.hg, gn: form.gn.trim().slice(0, 20) || 'لاعب 2', gg: form.gg, len: form.len, qs: form.qs, secret: form.secret, timer: form.timer };
+  try {
+    let c = null;
+    for (let t = 0; t < 8 && !c; t++) {
+      const cand = String(1000 + Math.floor(Math.random() * 9000));
+      const r = await db.ref('rooms/' + cand).transaction(cur => cur === null ? { host: myId, createdAt: Date.now(), gid: 'g' + Date.now().toString(36), startedAt: Date.now(), settings } : undefined);
+      if (r.committed) c = cand;
+    }
+    if (!c) throw new Error('nocode');
+    busy = false; openRoom(c);
+  } catch (e) { busy = false; flashErr('ما قدرناش نعمل الأوضة. اتأكد إن النت شغال وجرّب تاني.'); }
+}
+async function openRoom(c) {
+  if (!db) return; c = String(c).replace(/\D/g, '').slice(0, 4);
+  if (c.length !== 4) return flashErr('الكود 4 أرقام.');
+  busy = true; render();
+  try {
+    const snap = await db.ref('rooms/' + c).get();
+    if (!snap.exists()) { busy = false; return flashErr('مفيش أوضة بالكود ده. اتأكد من الكود.'); }
+    const r = snap.val();
+    if (r.host === myId) role = 'host';
+    else {
+      const t = await db.ref('rooms/' + c + '/guest').transaction(g => (g == null || g === myId) ? myId : undefined);
+      if (!t.committed) { busy = false; return flashErr('الأوضة دي فيها اتنين خلاص.'); }
+      role = 'guest';
+    }
+    code = c; LS.set('sekka_last', c); view = 'room'; lastShown = -1;
+    if (unsub) unsub();
+    const ref = db.ref('rooms/' + c); const h = s => { room = s.val(); render(); }; ref.on('value', h); unsub = () => ref.off('value', h);
+    history.replaceState(null, '', '#' + c);
+  } catch (e) { flashErr('حصلت مشكلة في الاتصال. جرّب تاني.'); }
+  busy = false; render();
+}
+async function pick(i, v) {
+  if (busy) return; busy = true; render();
+  try { await db.ref(`rooms/${code}/moves/${room.gid}/${role}/${i}`).set({ v, at: Date.now() }); }
+  catch (e) { flashErr('ما اتحفظش اختيارك. جرّب تاني.'); }
+  busy = false; render();
+}
+async function restart(newSettings) {
+  if (busy) return; busy = true; render();
+  const upd = { gid: 'g' + Date.now().toString(36), startedAt: Date.now() };
+  if (newSettings) upd.settings = newSettings;
+  try { await db.ref('rooms/' + code).update(upd); confirmNew = false; lastShown = -1; } catch (e) { flashErr('ما قدرناش نبدأ من جديد. جرّب تاني.'); }
+  busy = false; render();
+}
+function saveHistory(pr) {
+  const gid = room.gid; if (savedHist.has(gid) || (room.history && room.history[gid])) return; savedHist.add(gid);
+  const end = STORIES[S().story].endings.find(e => pr.harmony >= e.min);
+  db.ref(`rooms/${code}/history/${gid}`).set({ story: S().story, harmony: pr.harmony, ending: end.t, endedAt: Date.now() }).catch(() => { });
+}
+function leave() { if (unsub) unsub(); unsub = null; room = null; code = null; role = null; view = 'home'; history.replaceState(null, '', location.pathname); render(); }
+
+/* ===================== العرض ===================== */
+function header() {
+  const sub = room && S() ? ['مغامرة لاتنين · ', nameEl('host'), ' و', nameEl('guest')] : ['مغامرة لاتنين'];
+  return el('header', null, el('div', { class: 'brand' }, 'سكة واحدة', el('small', null, sub)), el('div', { style: 'display:grid;justify-items:center;gap:4px' }, el('div', { class: 'moon', 'aria-hidden': 'true' }), el('span', { id: 'net', class: 'net' + (online ? '' : ' off') }, el('i'), online ? 'متصل' : 'مش متصل… بيحاول تاني')));
+}
+function render() {
+  const fid = document.activeElement && document.activeElement.id, draft = (document.getElementById('ans') || {}).value, codeDraft = (document.getElementById('jcode') || {}).value;
+  const body = [];
+  if (!db) body.push(el('div', { class: 'card' }, el('h2', null, 'اللعبة مش متوصلة بالسيرفر'), el('p', null, 'إعدادات Firebase ناقصة في ملف config.js.')));
+  else if (view === 'home') body.push(home());
+  else if (view === 'create') body.push(createView());
+  else if (view === 'room') { if (!room) body.push(el('div', { class: 'card' }, el('p', { class: 'muted' }, 'بيفتح الأوضة…'))); else body.push(...roomView()); }
+  if (errText) body.push(el('p', { class: 'err' }, errText));
+  $app.replaceChildren(header(), ...body);
+  if (draft != null && document.getElementById('ans')) document.getElementById('ans').value = draft;
+  if (codeDraft != null && document.getElementById('jcode')) document.getElementById('jcode').value = codeDraft;
+  if (fid && document.getElementById(fid)) document.getElementById(fid).focus();
+}
+function home() {
+  const last = LS.get('sekka_last');
+  return el('div', { class: 'wrap', style: 'gap:14px' },
+    el('div', { class: 'card' }, el('h2', null, 'مغامرة غامضة لاتنين 🌙'), el('p', null, 'في كل مشهد كل واحد بيختار من غير ما يشوف اختيار التاني، وبعدين الاختيارين بيتكشفوا مع بعض. مش لازم تلعبوا في نفس الوقت، المغامرة بتستنى.')),
+    el('div', { class: 'card', style: 'display:grid;gap:12px' }, el('h3', null, 'إنت اللي هتبدأ؟'), el('button', { class: 'btn', id: 'go-create', onclick: () => { view = 'create'; render(); } }, '＋ أوضة جديدة')),
+    el('div', { class: 'card', style: 'display:grid;gap:10px' }, el('h3', null, 'معاك كود؟'), el('div', { class: 'row' }, el('input', { type: 'tel', id: 'jcode', inputmode: 'numeric', maxlength: '4', placeholder: 'مثلاً 4827', style: 'flex:1;min-width:0;direction:ltr;text-align:center;font-size:20px;letter-spacing:4px', onkeydown: e => { if (e.key === 'Enter') openRoom(e.target.value); } }), el('button', { class: 'btn', id: 'go-join', disabled: busy || null, onclick: () => openRoom(document.getElementById('jcode').value) }, 'ادخل'))),
+    last ? el('button', { class: 'btn ghost', id: 'go-last', onclick: () => openRoom(last) }, 'ارجع لأوضتك ' + last) : null);
+}
+function seg(id, options, cur, set) { return el('div', { class: 'seg', role: 'group' }, options.map(([v, t], k) => el('button', { id: id + '-' + k, class: cur === v ? 'on' : '', 'aria-pressed': cur === v ? 'true' : 'false', onclick: () => { set(v); render(); } }, t))); }
+function createView() {
+  const f = form;
+  const stories = el('div', { class: 'stories' }, Object.entries(STORIES).map(([k, s]) => el('button', { class: 'story' + (f.story === k ? ' on' : ''), id: 'st-' + k, onclick: () => { f.story = k; render(); } }, el('span', { class: 'em', 'aria-hidden': 'true' }, s.em), el('span', { class: 't' }, s.title), el('span', { class: 'd' }, s.blurb))));
+  const nm = (who, label) => el('div', { class: 'field' }, el('label', { for: who + 'n' }, label), el('input', { type: 'text', id: who + 'n', maxlength: '20', value: f[who + 'n'], oninput: e => { f[who + 'n'] = e.target.value; } }), seg(who + 'g', [['m', 'ولد'], ['f', 'بنت']], f[who + 'g'], v => { f[who + 'g'] = v; }));
+  return el('div', { class: 'wrap', style: 'gap:14px' },
+    el('div', { class: 'card', style: 'display:grid;gap:12px' }, el('h2', null, 'أوضة جديدة'), el('h3', null, 'القصة'), stories),
+    el('div', { class: 'card', style: 'display:grid;gap:14px' }, el('h3', null, 'اللاعبين'), el('div', { class: 'two' }, nm('h', 'اسمك'), nm('g', 'اسم التاني')), el('p', { class: 'muted' }, '«ولد/بنت» علشان الكلام يتكتب صح: «اختار» و«اختارت».')),
+    el('div', { class: 'card', style: 'display:grid;gap:14px' }, el('h3', null, 'الإعدادات'),
+      el('div', { class: 'field' }, el('label', null, 'طول القصة'), seg('len', [[8, 'كاملة · 8 مشاهد'], [5, 'قصيرة · 5 مشاهد']], f.len, v => { f.len = v; })),
+      el('div', { class: 'field' }, el('label', null, 'أسئلة عنكم بين المشاهد'), seg('qs', [[true, 'أيوه'], [false, 'لأ']], f.qs, v => { f.qs = v; })),
+      el('div', { class: 'field' }, el('label', null, 'الحاجة السرية اللي في الجيب'), seg('sec', [[true, 'أيوه'], [false, 'لأ']], f.secret, v => { f.secret = v; })),
+      el('div', { class: 'field' }, el('label', null, 'وقت لكل اختيار'), seg('tm', [[0, 'من غير وقت'], [30, '30 ثانية'], [60, 'دقيقة'], [120, 'دقيقتين']], f.timer, v => { f.timer = v; })),
+      f.timer ? el('p', { class: 'muted' }, 'لو الوقت خلص واللاعب فاتح اللعبة ولسه ما اختارش، البرنامج بيختار له عشوائي.') : null),
+    el('div', { class: 'row' }, el('button', { class: 'btn', id: 'do-create', disabled: busy || null, onclick: createRoom }, busy ? 'بيعمل الأوضة…' : 'اعمل الأوضة'), el('button', { class: 'btn ghost', id: 'back', onclick: () => { view = 'home'; render(); } }, 'رجوع')));
+}
+function shareCard() {
+  const link = SITE + '#' + code, msg = 'تعالي نلعب «سكة واحدة» 🌙\n' + link + '\nالكود: ' + code;
+  return el('div', { class: 'card', style: 'display:grid;gap:10px' }, el('h3', null, 'ابعت الكود لـ' + NAMES().guest), el('div', { class: 'code' }, code), el('div', { class: 'link' }, link),
+    el('div', { class: 'row' }, el('a', { class: 'btn', href: 'https://wa.me/?text=' + encodeURIComponent(msg), target: '_blank', rel: 'noopener' }, 'ابعت واتساب'), el('button', { class: 'btn ghost', id: 'copy', onclick: async e => { try { await navigator.clipboard.writeText(msg); e.target.textContent = 'اتنسخ ✓'; } catch (x) { e.target.textContent = 'انسخ الكود يدوي'; } } }, 'انسخ')),
+    el('p', { class: 'muted' }, 'تقدر تبدأ تختار من دلوقتي، واختياراتك هتستناها.'));
+}
+let tick = null;
+function roomView() {
+  const set = S(); if (!set || !STORIES[set.story]) return [el('div', { class: 'card' }, el('p', null, 'الأوضة دي مش سليمة.'))];
+  const pr = progress(), out = [];
+  if (role === 'host' && !room.guest) out.push(shareCard());
+  if (pr.cur >= pr.steps.length) out.push(...ending(pr)); else out.push(...playing(pr));
+  out.push(el('div', { class: 'row' }, el('span', { class: 'muted' }, 'الأوضة ' + code), el('button', { class: 'btn ghost', id: 'leave', onclick: leave }, 'خروج')));
+  setupTimer(pr);
+  return out;
+}
+function topBar(pr) {
+  const SS = STORIES[S().story];
+  return el('div', { class: 'card', style: 'display:grid;gap:10px' },
+    el('div', { class: 'row', style: 'justify-content:space-between' }, el('h3', { style: 'margin:0' }, SS.em + ' ' + SS.title), el('span', { class: 'muted' }, 'خطوة ' + Math.min(pr.cur + 1, pr.steps.length) + ' من ' + pr.steps.length)),
+    el('div', { class: 'steps', 'aria-hidden': 'true' }, pr.steps.map((s, i) => el('span', { class: i < pr.cur ? 'done' : i === pr.cur ? 'now' : '' }))),
+    el('div', { class: 'meter' }, el('span', null, 'التفاهم'), el('div', { class: 'bar' }, el('i', { style: 'width:' + (pr.scored ? pr.harmony : 50) + '%' })), el('span', null, pr.scored ? pr.harmony + '%' : '—')));
+}
+function playing(pr) {
+  const SS = STORIES[S().story], out = [topBar(pr)];
+  if (pr.cur === 0) out.push(el('div', { class: 'card' }, el('p', null, tpl(SS.intro))));
+  if (S().secret) out.push(el('div', { class: 'pocket' }, el('span', { 'aria-hidden': 'true' }, '🎒'), el('div', null, 'في جيبك من أول ما المغامرة بدأت: ', el('b', null, itemOf(role)), '. محدش يعرف بيها غيرك.')));
+  const last = pr.cur - 1;
+  if (last >= 0) {
+    const o = outcomeOf(last, pr);
+    if (o) { const fresh = last !== lastShown; lastShown = last; out.push(el('div', { class: 'card reveal' + (fresh ? ' flip' : '') }, o.verdict ? el('div', { class: 'verdict ' + o.verdict[0] }, o.verdict[1]) : null, el('div', { class: 'picks' }, o.picks), el('p', null, o.text))); }
+    else { const st = pr.steps[last]; out.push(el('div', { class: 'card reveal' }, el('h3', null, '💬 ' + SS.qs[st.i]), el('div', { class: 'answers' }, ['host', 'guest'].map(r => el('div', { class: 'ans' }, el('span', { class: 'n ' + cls(r) }, NAMES()[r]), String(val(r === 'host' ? pr.A : pr.B, last) || '')))))); }
+  }
+  const st = pr.steps[pr.cur], mine = val(movesOf(role), pr.cur), other = OTHER(role), theirs = val(movesOf(other), pr.cur);
+  const timerEl = S().timer && mine === undefined ? el('span', { class: 'timer', id: 'timer' }, '') : null;
+  if (st.k === 'scene') {
+    const sc = SS.scenes[st.i];
+    const card = el('div', { class: 'card scene' }, timerEl ? el('div', { class: 'row', style: 'justify-content:flex-end' }, '⏱ ', timerEl) : null, el('p', { class: 'text' }, tpl(sc.t)));
+    if (mine === undefined) card.append(el('div', { class: 'opts' }, sc.o.map((o, i) => el('button', { class: 'opt', id: 'opt-' + i, onclick: () => pick(pr.cur, i), disabled: busy || null }, o.t))));
+    else card.append(el('div', { class: 'opts' }, el('div', { class: 'opt mine' }, 'اخترت: ' + sc.o[mine].t)), el('div', { class: 'wait' }, el('span', { class: 'dot' }), waitFor(other) + '… أول ما يتم الاختيار هيتكشف الاختيارين.'));
+    if (mine === undefined && theirs !== undefined) card.append(el('p', { class: 'muted', style: 'margin-top:10px' }, NAMES()[other] + ' ' + chose(other) + ' خلاص ✓ ومستني دورك.'));
+    out.push(card);
+  } else {
+    const card = el('div', { class: 'card' }, el('div', { class: 'row', style: 'justify-content:space-between' }, el('h3', null, '💬 سؤال بينكم'), timerEl ? el('span', null, '⏱ ', timerEl) : null), el('p', { class: 'text', style: 'font-size:17px' }, SS.qs[st.i]));
+    if (mine === undefined) {
+      card.append(el('textarea', { id: 'ans', maxlength: '400', placeholder: 'اكتب إجابتك… التاني مش هيشوفها غير لما يجاوب هو كمان.' }), el('div', { class: 'row', style: 'margin-top:10px' }, el('button', { class: 'btn', id: 'send', disabled: busy || null, onclick: () => { const v = (document.getElementById('ans').value || '').trim(); if (!v) return flashErr('اكتب إجابة الأول 🙂'); pick(pr.cur, v.slice(0, 400)); } }, 'ابعت إجابتي')));
+      if (theirs !== undefined) card.append(el('p', { class: 'muted', style: 'margin-top:10px' }, NAMES()[other] + ' جاوب خلاص ✓. الإجابة هتظهر لما تجاوب إنت كمان.'));
+    } else card.append(el('div', { class: 'ans', style: 'margin-top:10px' }, el('span', { class: 'n' }, 'إجابتك'), String(mine)), el('div', { class: 'wait' }, el('span', { class: 'dot' }), waitAns(other) + '…'));
+    out.push(card);
+  }
+  if (pr.cur > 1) { const log = el('div', { class: 'log' }); for (let i = 0; i < pr.cur - 1; i++) { const o = outcomeOf(i, pr); if (o) log.append(el('div', null, o.text)); } out.push(el('details', null, el('summary', null, 'القصة لحد دلوقتي'), log)); }
+  out.push(newRow());
+  return out;
+}
+function setupTimer(pr) {
+  clearInterval(tick); tick = null;
+  if (!S().timer || pr.cur >= pr.steps.length || val(movesOf(role), pr.cur) !== undefined) return;
+  const deadline = pr.startAt(pr.cur) + S().timer * 1000, step = pr.cur;
+  const upd = () => {
+    const left = Math.max(0, Math.round((deadline - Date.now()) / 1000)), t = document.getElementById('timer');
+    if (t) t.textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0');
+    if (left <= 0 && !busy) { clearInterval(tick); const st = pr.steps[step]; if (st.k === 'scene') { const n = STORIES[S().story].scenes[st.i].o.length; pick(step, Math.floor(Math.random() * n)); } else pick(step, '(الوقت خلص قبل ما أجاوب ⏱)'); }
+  };
+  setTimeout(upd, 0); tick = setInterval(upd, 1000);
+}
+function ending(pr) {
+  const SS = STORIES[S().story], end = SS.endings.find(e => pr.harmony >= e.min); saveHistory(pr);
+  const sIdx = pr.steps.findIndex(s => s.k === 'scene' && SS.scenes[s.i].secret), both = sIdx >= 0 && val(pr.A, sIdx) === 0 && val(pr.B, sIdx) === 0;
+  const fresh = endShown !== room.gid; endShown = room.gid;
+  const out = [el('div', { class: 'card end' + (fresh ? ' flip' : '') }, el('div', { class: 'muted' }, SS.em + ' ' + SS.title + ' · النهاية'), el('div', { class: 'pct' }, pr.harmony + '%'), el('div', { class: 'muted' }, 'نسبة التفاهم: ' + pr.matched + ' من ' + pr.scored + ' مواقف'), el('h2', null, end.t), el('p', null, tpl(end.x)), both ? el('p', { class: 'muted', style: 'margin-top:10px' }, '🔓 وإنتوا الاتنين كشفتوا اللي في جيوبكم.') : null)];
+  const ans = el('div', { class: 'answers' }); pr.steps.forEach((s, i) => { if (s.k === 'q') ans.append(el('div', { class: 'ans' }, el('span', { class: 'n', style: 'color:var(--lantern)' }, SS.qs[s.i]), el('span', { class: 'n h' }, NAMES().host), String(val(pr.A, i) || ''), '\n', el('span', { class: 'n r' }, NAMES().guest), String(val(pr.B, i) || ''))); });
+  if (ans.childNodes.length) out.push(el('div', { class: 'card' }, el('h3', null, '💬 إجاباتكم'), ans));
+  const log = el('div', { class: 'log' }); pr.steps.forEach((s, i) => { const o = outcomeOf(i, pr); if (o) log.append(el('div', null, o.text)); }); out.push(el('details', null, el('summary', null, 'القصة كاملة'), log));
+  const hist = Object.values(room.history || {}).sort((a, b) => b.endedAt - a.endedAt);
+  if (hist.length) out.push(el('div', { class: 'card' }, el('h3', null, 'مغامراتكم في الأوضة دي'), el('div', { class: 'hist' }, hist.slice(0, 10).map(h => el('div', null, el('span', null, (STORIES[h.story] || {}).em || '', ' ', (STORIES[h.story] || {}).title || '', ' · ', h.ending), el('span', null, h.harmony + '%'))))));
+  out.push(el('div', { class: 'row' }, ...Object.entries(STORIES).map(([k, s]) => el('button', { class: 'btn' + (k === S().story ? ' ghost' : ''), id: 'again-' + k, disabled: busy || null, onclick: () => restart(Object.assign({}, S(), { story: k })) }, s.em + ' ' + (k === S().story ? 'نلعبها تاني' : s.title)))));
+  return out;
+}
+function newRow() {
+  if (confirmNew) return el('div', { class: 'card confirm' }, el('p', null, 'تبدأوا من الأول؟ المغامرة دي هتقف عند الاتنين.'), el('div', { class: 'row', style: 'margin-top:10px' }, ...Object.entries(STORIES).map(([k, s]) => el('button', { class: 'btn', id: 'rs-' + k, onclick: () => restart(Object.assign({}, S(), { story: k })) }, s.em + ' ' + s.title)), el('button', { class: 'btn ghost', id: 'no-new', onclick: () => { confirmNew = false; render(); } }, 'لأ، نكمّل')));
+  return el('div', { class: 'row' }, el('button', { class: 'btn ghost', id: 'new', onclick: () => { confirmNew = true; render(); } }, 'نبدأ من الأول'));
+}
+
+/* ===================== تشغيل ===================== */
+render();
+const h0 = (location.hash || '').replace(/\D/g, '');
+if (h0.length === 4) openRoom(h0);
+
+</script>
+</body>
+</html>

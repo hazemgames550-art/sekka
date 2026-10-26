@@ -1,0 +1,12 @@
+// إعدادات Firebase (من console.firebase.google.com ← Project settings ← Your apps)
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyB9VaMdIO71CJVCNh1W-ClbAhyqbjGoNKc",
+  authDomain: "sekka-7beaa.firebaseapp.com",
+  databaseURL: "https://sekka-7beaa-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "sekka-7beaa",
+  storageBucket: "sekka-7beaa.firebasestorage.app",
+  messagingSenderId: "933397078084",
+  appId: "1:933397078084:web:ad4c49a31fb07213421c11"
+};
+// لينك الموقع اللي هيتبعت للاعب التاني
+window.SITE_URL = "https://USERNAME.github.io/sekka/";
