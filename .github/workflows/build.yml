@@ -34,6 +34,10 @@ jobs:
         run: npm install
       - name: Add Android
         run: npx cap add android
+      - name: Mic permission
+        run: |
+          sed -i 's#</manifest>#    <uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n</manifest>#' android/app/src/main/AndroidManifest.xml
+          grep -q RECORD_AUDIO android/app/src/main/AndroidManifest.xml
       - name: Icons
         run: npx capacitor-assets generate --android --iconBackgroundColor '#0d1424' --splashBackgroundColor '#0d1424' || true
       - name: Sync
