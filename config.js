@@ -9,4 +9,4 @@ window.FIREBASE_CONFIG = {
   appId: "1:933397078084:web:ad4c49a31fb07213421c11"
 };
 // لينك الموقع اللي هيتبعت للاعب التاني
-window.SITE_URL = "https://USERNAME.github.io/sekka/";
+  window.SITE_URL = "https://hazemgames550-art.github.io/sekka/";
