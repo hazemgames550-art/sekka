@@ -24,8 +24,8 @@ html,body{margin:0}
   --moon:#efe6d2;       /* main text, moonlit paper */
   --mist:#9aa3bd;       /* secondary text */
   --lantern:#e8a948;    /* accent: lantern light */
-  --hazem:#7fb3e6;      /* Hazem's color */
-  --rewan:#e79ab5;      /* Rewan's color */
+  --p1:#7fb3e6;         /* لون صاحب الأوضة */
+  --p2:#e79ab5;         /* لون اللاعب التاني */
   --good:#8fd1a8;
   --display:"Reem Kufi","IBM Plex Sans Arabic",Tahoma,sans-serif;
   --body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
@@ -42,7 +42,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .moon{width:44px;height:44px;border-radius:50%;flex:none;background:radial-gradient(circle at 38% 38%,#fff8e6,#e9d9b4 55%,#b9a77f);box-shadow:0 0 28px 6px rgba(232,169,72,.18)}
 .who{font-size:13px;color:var(--mist)}
 .who b{font-weight:600}
-.h{color:var(--hazem)} .r{color:var(--rewan)}
+.h{color:var(--p1)} .r{color:var(--p2)}
 .card{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:18px}
 h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0 0 6px;text-wrap:balance}
 h3{font-family:var(--display);font-weight:500;font-size:17px;margin:0 0 4px;color:var(--lantern)}
@@ -57,7 +57,7 @@ p{margin:0}
 .story .d{color:var(--mist);font-size:14px;line-height:1.7}
 .meter{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mist)}
 .bar{flex:1;height:8px;border-radius:8px;background:#0a0f1c;border:1px solid var(--line);overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--hazem),var(--lantern),var(--rewan));transition:width .8s ease}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--p1),var(--lantern),var(--p2));transition:width .8s ease}
 .steps{display:flex;gap:5px;flex-wrap:wrap}
 .steps span{width:18px;height:6px;border-radius:4px;background:var(--line)}
 .steps span.done{background:var(--lantern)}
@@ -76,7 +76,7 @@ p{margin:0}
 .pick{border-radius:10px;padding:10px 12px;background:#0f1628;border:1px solid var(--line);font-size:14px;min-width:0}
 .pick .n{font-weight:600;font-size:13px}
 .verdict{font-weight:600;margin-bottom:6px}
-.verdict.ok{color:var(--good)} .verdict.no{color:var(--rewan)}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--p2)}
 .flip{animation:flip .6s ease both}
 @keyframes flip{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 textarea{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;margin-top:12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0f1628;color:var(--moon);font:inherit;line-height:1.8}
@@ -102,7 +102,7 @@ summary{cursor:pointer;color:var(--mist);font-size:14px}
 .hist div{display:flex;justify-content:space-between;gap:10px;font-size:14px;border-bottom:1px solid var(--line);padding-bottom:6px}
 .hist div span:last-child{color:var(--lantern);font-variant-numeric:tabular-nums}
 .confirm{margin-top:10px;font-size:14px}
-.err{color:var(--rewan)}
+.err{color:var(--p2)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 
@@ -121,14 +121,39 @@ input:focus{outline:2px solid var(--lantern);outline-offset:1px}
 .link{direction:ltr;text-align:left;font-size:13px;color:var(--mist);word-break:break-all;background:#0f1628;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
 .net{font-size:12px;color:var(--mist);display:flex;align-items:center;gap:6px}
 .net i{width:8px;height:8px;border-radius:50%;background:var(--good)}
-.net.off i{background:var(--rewan)}
+.net.off i{background:var(--p2)}
 .timer{font-variant-numeric:tabular-nums;color:var(--lantern);font-weight:600}
 a.btn{text-decoration:none}
+
+/* شريط الصوت والجو تحت */
+body.hasdock{padding-bottom:150px}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:10px max(12px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(13,20,36,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line)}
+.dock .in{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:8px}
+.ib{all:unset;cursor:pointer;flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:20px;background:#10182c;border:1px solid var(--line);position:relative;transition:box-shadow .15s,border-color .2s}
+.ib:focus-visible{outline:2px solid var(--lantern);outline-offset:2px}
+.ib.on{border-color:var(--good);background:#13261c}
+.ib.off{opacity:.75}
+.ib.off::after{content:'';position:absolute;width:28px;height:2px;background:var(--p2);transform:rotate(-45deg);border-radius:2px}
+.ib.talk{box-shadow:0 0 0 4px rgba(143,209,168,.45)}
+.vs{flex:1;min-width:0;font-size:12px;color:var(--mist);line-height:1.5}
+.vs .l1{color:var(--moon)}
+.vs .od{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--line);margin-inline-end:5px;vertical-align:middle;transition:background .15s,box-shadow .15s}
+.vs .od.talk{background:var(--good);box-shadow:0 0 0 3px rgba(143,209,168,.35)}
+.vs button{all:unset;cursor:pointer;color:var(--lantern);text-decoration:underline;margin-inline-start:6px}
+.rxbar{max-width:560px;margin:0 auto 10px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.rxbar button{all:unset;cursor:pointer;font-size:24px;line-height:1;padding:7px 9px;border-radius:12px;background:#10182c;border:1px solid var(--line)}
+.rxbar button:active{transform:scale(.9)}
+.fly{position:fixed;bottom:110px;font-size:40px;line-height:1;pointer-events:none;z-index:30;animation:fly 2.6s ease-out forwards}
+.fly small{display:block;font-size:11px;text-align:center;font-family:var(--body);margin-top:2px}
+@keyframes fly{0%{transform:translateY(0) scale(.5);opacity:0}15%{opacity:1;transform:translateY(-30px) scale(1.15)}100%{transform:translateY(-330px) scale(1);opacity:0}}
+.ver{text-align:center;font-size:11px;color:#4d5878}
 
 </style>
 </head>
 <body>
 <div class="wrap" id="app"><div class="card"><p class="muted">بيفتح…</p></div></div>
+<div id="dock" class="dock" hidden></div>
+<audio id="rau" autoplay playsinline></audio>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script src="config.js"></script>
@@ -331,12 +356,13 @@ const hash = s => { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0
 
 /* ===================== Firebase ===================== */
 let db = null, online = true;
-try { firebase.initializeApp(window.FIREBASE_CONFIG); db = firebase.database(); db.ref('.info/connected').on('value', s => { online = !!s.val(); const n = document.getElementById('net'); if (n) { n.className = 'net' + (online ? '' : ' off'); n.lastChild.textContent = online ? 'متصل' : 'مش متصل… بيحاول تاني'; } }); } catch (e) { db = null; }
+try { firebase.initializeApp(window.FIREBASE_CONFIG); db = firebase.database(); db.ref('.info/connected').on('value', s => { online = !!s.val(); const n = document.getElementById('net'); if (n) { n.className = 'net' + (online ? '' : ' off'); n.lastChild.textContent = online ? 'متصل' : 'مش متصل… بيحاول تاني'; } if (online && typeof V !== 'undefined' && V.sid) renewSid(); }); } catch (e) { db = null; }
 
 /* ===================== الحالة ===================== */
 let view = 'home', code = null, room = null, role = null, unsub = null, busy = false, errText = '', confirmNew = false, lastShown = -1, endShown = null;
 const savedHist = new Set();
-const form = { story: 'island', hn: 'حازم', hg: 'm', gn: 'ريوان', gg: 'f', len: 8, qs: true, secret: true, timer: 0 };
+const VER = 3;
+const form = { story: 'island', hn: '', hg: 'm', gn: '', gg: 'm', len: 8, qs: true, secret: true, timer: 0, voice: true, react: true, sfx: true, music: true };
 try { Object.assign(form, JSON.parse(LS.get('sekka_form') || '{}')); } catch (e) { }
 
 const S = () => room && room.settings;
@@ -392,7 +418,7 @@ function flashErr(t) { errText = t; render(); setTimeout(() => { errText = ''; r
 async function createRoom() {
   if (busy || !db) return; busy = true; render();
   LS.set('sekka_form', JSON.stringify(form));
-  const settings = { story: form.story, hn: form.hn.trim().slice(0, 20) || 'لاعب 1', hg: form.hg, gn: form.gn.trim().slice(0, 20) || 'لاعب 2', gg: form.gg, len: form.len, qs: form.qs, secret: form.secret, timer: form.timer };
+  const settings = { story: form.story, hn: form.hn.trim().slice(0, 20) || 'لاعب 1', hg: form.hg, gn: form.gn.trim().slice(0, 20) || 'لاعب 2', gg: form.gg, len: form.len, qs: form.qs, secret: form.secret, timer: form.timer, voice: form.voice, react: form.react, sfx: form.sfx, music: form.music };
   try {
     let c = null;
     for (let t = 0; t < 8 && !c; t++) {
@@ -420,13 +446,23 @@ async function openRoom(c) {
     }
     code = c; LS.set('sekka_last', c); view = 'room'; lastShown = -1;
     if (unsub) unsub();
-    const ref = db.ref('rooms/' + c); const h = s => { room = s.val(); render(); }; ref.on('value', h); unsub = () => ref.off('value', h);
+    voiceStop(); liveReset();
+    let lastKey = '';
+    const ref = db.ref('rooms/' + c);
+    const h = s => {
+      const v = s.val(), live = v && v.live; if (v) delete v.live;
+      const k = JSON.stringify(v);
+      if (k !== lastKey) { lastKey = k; room = v; render(); }
+      if (room && view === 'room' && !V.sid) voiceStart();
+      handleLive(live);
+    };
+    ref.on('value', h); unsub = () => ref.off('value', h);
     history.replaceState(null, '', '#' + c);
   } catch (e) { flashErr('حصلت مشكلة في الاتصال. جرّب تاني.'); }
   busy = false; render();
 }
 async function pick(i, v) {
-  if (busy) return; busy = true; render();
+  if (busy) return; busy = true; sfx('pick'); render();
   try { await db.ref(`rooms/${code}/moves/${room.gid}/${role}/${i}`).set({ v, at: Date.now() }); }
   catch (e) { flashErr('ما اتحفظش اختيارك. جرّب تاني.'); }
   busy = false; render();
@@ -443,7 +479,7 @@ function saveHistory(pr) {
   const end = STORIES[S().story].endings.find(e => pr.harmony >= e.min);
   db.ref(`rooms/${code}/history/${gid}`).set({ story: S().story, harmony: pr.harmony, ending: end.t, endedAt: Date.now() }).catch(() => { });
 }
-function leave() { if (unsub) unsub(); unsub = null; room = null; code = null; role = null; view = 'home'; history.replaceState(null, '', location.pathname); render(); }
+function leave() { voiceStop(); if (unsub) unsub(); unsub = null; room = null; code = null; role = null; view = 'home'; history.replaceState(null, '', location.pathname); render(); }
 
 /* ===================== العرض ===================== */
 function header() {
@@ -462,6 +498,7 @@ function render() {
   if (draft != null && document.getElementById('ans')) document.getElementById('ans').value = draft;
   if (codeDraft != null && document.getElementById('jcode')) document.getElementById('jcode').value = codeDraft;
   if (fid && document.getElementById(fid)) document.getElementById(fid).focus();
+  sfxWatch(); renderDock(); syncMusic();
 }
 function home() {
   const last = LS.get('sekka_last');
@@ -469,26 +506,33 @@ function home() {
     el('div', { class: 'card' }, el('h2', null, 'مغامرة غامضة لاتنين 🌙'), el('p', null, 'في كل مشهد كل واحد بيختار من غير ما يشوف اختيار التاني، وبعدين الاختيارين بيتكشفوا مع بعض. مش لازم تلعبوا في نفس الوقت، المغامرة بتستنى.')),
     el('div', { class: 'card', style: 'display:grid;gap:12px' }, el('h3', null, 'إنت اللي هتبدأ؟'), el('button', { class: 'btn', id: 'go-create', onclick: () => { view = 'create'; render(); } }, '＋ أوضة جديدة')),
     el('div', { class: 'card', style: 'display:grid;gap:10px' }, el('h3', null, 'معاك كود؟'), el('div', { class: 'row' }, el('input', { type: 'tel', id: 'jcode', inputmode: 'numeric', maxlength: '4', placeholder: 'مثلاً 4827', style: 'flex:1;min-width:0;direction:ltr;text-align:center;font-size:20px;letter-spacing:4px', onkeydown: e => { if (e.key === 'Enter') openRoom(e.target.value); } }), el('button', { class: 'btn', id: 'go-join', disabled: busy || null, onclick: () => openRoom(document.getElementById('jcode').value) }, 'ادخل'))),
-    last ? el('button', { class: 'btn ghost', id: 'go-last', onclick: () => openRoom(last) }, 'ارجع لأوضتك ' + last) : null);
+    last ? el('button', { class: 'btn ghost', id: 'go-last', onclick: () => openRoom(last) }, 'ارجع لأوضتك ' + last) : null,
+    el('p', { class: 'ver' }, 'نسخة ' + VER));
 }
 function seg(id, options, cur, set) { return el('div', { class: 'seg', role: 'group' }, options.map(([v, t], k) => el('button', { id: id + '-' + k, class: cur === v ? 'on' : '', 'aria-pressed': cur === v ? 'true' : 'false', onclick: () => { set(v); render(); } }, t))); }
 function createView() {
   const f = form;
   const stories = el('div', { class: 'stories' }, Object.entries(STORIES).map(([k, s]) => el('button', { class: 'story' + (f.story === k ? ' on' : ''), id: 'st-' + k, onclick: () => { f.story = k; render(); } }, el('span', { class: 'em', 'aria-hidden': 'true' }, s.em), el('span', { class: 't' }, s.title), el('span', { class: 'd' }, s.blurb))));
-  const nm = (who, label) => el('div', { class: 'field' }, el('label', { for: who + 'n' }, label), el('input', { type: 'text', id: who + 'n', maxlength: '20', value: f[who + 'n'], oninput: e => { f[who + 'n'] = e.target.value; } }), seg(who + 'g', [['m', 'ولد'], ['f', 'بنت']], f[who + 'g'], v => { f[who + 'g'] = v; }));
+  const nm = (who, label) => el('div', { class: 'field' }, el('label', { for: who + 'n' }, label), el('input', { type: 'text', id: who + 'n', maxlength: '20', value: f[who + 'n'], placeholder: who === 'h' ? 'اكتب اسمك' : 'اكتب اسم صاحبك', autocomplete: 'off', oninput: e => { f[who + 'n'] = e.target.value; } }), seg(who + 'g', [['m', 'ولد'], ['f', 'بنت']], f[who + 'g'], v => { f[who + 'g'] = v; }));
   return el('div', { class: 'wrap', style: 'gap:14px' },
     el('div', { class: 'card', style: 'display:grid;gap:12px' }, el('h2', null, 'أوضة جديدة'), el('h3', null, 'القصة'), stories),
-    el('div', { class: 'card', style: 'display:grid;gap:14px' }, el('h3', null, 'اللاعبين'), el('div', { class: 'two' }, nm('h', 'اسمك'), nm('g', 'اسم التاني')), el('p', { class: 'muted' }, '«ولد/بنت» علشان الكلام يتكتب صح: «اختار» و«اختارت».')),
+    el('div', { class: 'card', style: 'display:grid;gap:14px' }, el('h3', null, 'اللاعبين'), el('div', { class: 'two' }, nm('h', 'اسمك'), nm('g', 'اسم اللي هيلعب معاك')), el('p', { class: 'muted' }, '«ولد/بنت» علشان الكلام يتكتب صح: «اختار» و«اختارت».')),
     el('div', { class: 'card', style: 'display:grid;gap:14px' }, el('h3', null, 'الإعدادات'),
       el('div', { class: 'field' }, el('label', null, 'طول القصة'), seg('len', [[8, 'كاملة · 8 مشاهد'], [5, 'قصيرة · 5 مشاهد']], f.len, v => { f.len = v; })),
       el('div', { class: 'field' }, el('label', null, 'أسئلة عنكم بين المشاهد'), seg('qs', [[true, 'أيوه'], [false, 'لأ']], f.qs, v => { f.qs = v; })),
       el('div', { class: 'field' }, el('label', null, 'الحاجة السرية اللي في الجيب'), seg('sec', [[true, 'أيوه'], [false, 'لأ']], f.secret, v => { f.secret = v; })),
       el('div', { class: 'field' }, el('label', null, 'وقت لكل اختيار'), seg('tm', [[0, 'من غير وقت'], [30, '30 ثانية'], [60, 'دقيقة'], [120, 'دقيقتين']], f.timer, v => { f.timer = v; })),
       f.timer ? el('p', { class: 'muted' }, 'لو الوقت خلص واللاعب فاتح اللعبة ولسه ما اختارش، البرنامج بيختار له عشوائي.') : null),
+    el('div', { class: 'card', style: 'display:grid;gap:14px' }, el('h3', null, 'الصوت والجو'),
+      el('div', { class: 'field' }, el('label', null, '🎤 مايك وسماعة بينكم'), seg('vo', [[true, 'أيوه'], [false, 'لأ']], f.voice, v => { f.voice = v; })),
+      el('div', { class: 'field' }, el('label', null, '😂 ردود فعل على الشاشة'), seg('rx', [[true, 'أيوه'], [false, 'لأ']], f.react, v => { f.react = v; })),
+      el('div', { class: 'field' }, el('label', null, '🔔 مؤثرات صوتية هادية'), seg('fx', [[true, 'أيوه'], [false, 'لأ']], f.sfx, v => { f.sfx = v; })),
+      el('div', { class: 'field' }, el('label', null, '🎵 موسيقى هادية في الخلفية'), seg('mu', [[true, 'أيوه'], [false, 'لأ']], f.music, v => { f.music = v; })),
+      el('p', { class: 'muted' }, 'كل واحد يقدر يقفل المايك أو السماعة أو الموسيقى عنده من الشريط اللي تحت وهو بيلعب. والموسيقى بتوطى لوحدها لما حد يتكلم.')),
     el('div', { class: 'row' }, el('button', { class: 'btn', id: 'do-create', disabled: busy || null, onclick: createRoom }, busy ? 'بيعمل الأوضة…' : 'اعمل الأوضة'), el('button', { class: 'btn ghost', id: 'back', onclick: () => { view = 'home'; render(); } }, 'رجوع')));
 }
 function shareCard() {
-  const link = SITE + '#' + code, msg = 'تعالي نلعب «سكة واحدة» 🌙\n' + link + '\nالكود: ' + code;
+  const link = SITE + '#' + code, msg = (S().gg === 'f' ? 'تعالي' : 'تعالى') + ' نلعب «سكة واحدة» 🌙\n' + link + '\nالكود: ' + code;
   return el('div', { class: 'card', style: 'display:grid;gap:10px' }, el('h3', null, 'ابعت الكود لـ' + NAMES().guest), el('div', { class: 'code' }, code), el('div', { class: 'link' }, link),
     el('div', { class: 'row' }, el('a', { class: 'btn', href: 'https://wa.me/?text=' + encodeURIComponent(msg), target: '_blank', rel: 'noopener' }, 'ابعت واتساب'), el('button', { class: 'btn ghost', id: 'copy', onclick: async e => { try { await navigator.clipboard.writeText(msg); e.target.textContent = 'اتنسخ ✓'; } catch (x) { e.target.textContent = 'انسخ الكود يدوي'; } } }, 'انسخ')),
     el('p', { class: 'muted' }, 'تقدر تبدأ تختار من دلوقتي، واختياراتك هتستناها.'));
@@ -569,6 +613,259 @@ function newRow() {
   if (confirmNew) return el('div', { class: 'card confirm' }, el('p', null, 'تبدأوا من الأول؟ المغامرة دي هتقف عند الاتنين.'), el('div', { class: 'row', style: 'margin-top:10px' }, ...Object.entries(STORIES).map(([k, s]) => el('button', { class: 'btn', id: 'rs-' + k, onclick: () => restart(Object.assign({}, S(), { story: k })) }, s.em + ' ' + s.title)), el('button', { class: 'btn ghost', id: 'no-new', onclick: () => { confirmNew = false; render(); } }, 'لأ، نكمّل')));
   return el('div', { class: 'row' }, el('button', { class: 'btn ghost', id: 'new', onclick: () => { confirmNew = true; render(); } }, 'نبدأ من الأول'));
 }
+
+/* ===================== الصوت والجو (نسخة 2) ===================== */
+// تفضيلات كل جهاز لوحده (مش بتتبعت للتاني)
+const PREF = { mic: false, spk: LS.get('sk_spk') !== '0', mus: LS.get('sk_mus') !== '0', sfx: LS.get('sk_sfx') !== '0' };
+const savePref = () => { LS.set('sk_spk', PREF.spk ? '1' : '0'); LS.set('sk_mus', PREF.mus ? '1' : '0'); LS.set('sk_sfx', PREF.sfx ? '1' : '0'); };
+const on = k => !!(room && S()) && S()[k] !== false;          // إعدادات الأوضة (الأوض القديمة: شغالة)
+const RX = ['😂', '❤️', '😱', '😮', '👏', '🥺'];
+let rxOpen = false, dockMsg = '', dockMsgT = null;
+const RAU = document.getElementById('rau');
+
+/* ---------- محرك الصوت ---------- */
+let AC = null, sfxBus = null, musBus = null, musLevel = 0;
+function ac() {
+  if (AC) return AC; const C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
+  try { AC = new C(); } catch (e) { return null; }
+  const comp = AC.createDynamicsCompressor(); comp.connect(AC.destination);
+  sfxBus = AC.createGain(); sfxBus.gain.value = .5; sfxBus.connect(comp);
+  musBus = AC.createGain(); musBus.gain.value = 0; musBus.connect(comp);
+  AC.onstatechange = () => { syncMusic(); renderDock(); };
+  return AC;
+}
+const audioOn = () => !!AC && AC.state === 'running';
+function unlock() {
+  const c = ac(); if (c && c.state !== 'running') c.resume().then(() => { syncMusic(); renderDock(); }).catch(() => { }); else if (c && view === 'room' && !mus) syncMusic();
+  if (RAU.srcObject && RAU.paused) RAU.play().catch(() => { });
+}
+['pointerdown', 'keydown', 'touchstart'].forEach(ev => document.addEventListener(ev, unlock, { capture: true, passive: true }));
+
+/* ---------- مؤثرات هادية ---------- */
+function tone(f, t0, dur, vol, type, f2, bus) {
+  const o = AC.createOscillator(), g = AC.createGain(); o.type = type || 'sine';
+  o.frequency.setValueAtTime(f, t0); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur * .8);
+  g.gain.setValueAtTime(.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + .02); g.gain.exponentialRampToValueAtTime(.0001, t0 + dur);
+  o.connect(g); g.connect(bus || sfxBus); o.start(t0); o.stop(t0 + dur + .05);
+}
+const SFX = {
+  pick: t => tone(880, t, .18, .05, 'triangle'),
+  other: t => tone(1175, t, .3, .04),
+  match: t => { tone(659, t, .9, .11); tone(988, t + .13, 1.1, .09); },
+  differ: t => tone(330, t, .8, .09, 'sine', 247),
+  pop: t => tone(740, t, .22, .07, 'sine', 1100),
+  join: t => { tone(523, t, .7, .08); tone(784, t + .16, .9, .07); },
+  end: t => [523, 659, 784, 1047].forEach((f, i) => tone(f, t + i * .2, 1.5, .07)),
+};
+function sfx(k) { if (!PREF.sfx || !on('sfx') || !audioOn()) return; try { SFX[k](AC.currentTime + .02); } catch (e) { } }
+// يراقب اللي حصل في الأوضة ويطلع صوت مناسب
+const sw = { gid: null, cur: -1, their: false, guest: false };
+function sfxWatch() {
+  if (view !== 'room' || !room || !S() || !STORIES[S().story]) return;
+  const pr = progress(), oth = OTHER(role), done = pr.cur >= pr.steps.length;
+  const theirs = !done && val(movesOf(oth), pr.cur) !== undefined;
+  if (sw.gid === room.gid) {
+    if (pr.cur > sw.cur) { if (done) sfx('end'); else { const o = outcomeOf(pr.cur - 1, pr); sfx(o && o.verdict ? (o.verdict[0] === 'ok' ? 'match' : 'differ') : 'other'); } }
+    else if (theirs && !sw.their) sfx('other');
+    if (role === 'host' && room.guest && !sw.guest) sfx('join');
+  }
+  Object.assign(sw, { gid: room.gid, cur: pr.cur, their: theirs, guest: !!room.guest });
+}
+
+/* ---------- موسيقى الخلفية (بتتعمل جوه اللعبة، مفيش ملفات) ---------- */
+const MOODS = {
+  island: { chords: [[220, 277.2, 329.6], [196, 246.9, 329.6], [174.6, 220, 261.6], [196, 246.9, 293.7]], extra: 'waves' },
+  house: { chords: [[146.8, 174.6, 220], [130.8, 164.8, 196], [116.5, 146.8, 174.6], [110, 138.6, 164.8]], extra: 'box', notes: [587.3, 698.5, 784, 880, 1046.5, 1174.7] },
+  train: { chords: [[164.8, 207.7, 246.9], [146.8, 185, 220], [138.6, 174.6, 207.7], [123.5, 155.6, 185]], extra: 'rail' },
+};
+let mus = null, noiseB = null;
+function brown() {
+  if (noiseB) return noiseB; const n = AC.sampleRate * 3, b = AC.createBuffer(1, n, AC.sampleRate), d = b.getChannelData(0); let l = 0;
+  for (let i = 0; i < n; i++) { l = (l + .02 * (Math.random() * 2 - 1)) / 1.02; d[i] = l * 3.5; } return noiseB = b;
+}
+function startMusic(story) {
+  stopMusic(); const c = AC, m = MOODS[story] || MOODS.island, nodes = [], timers = [];
+  const out = c.createGain(); out.gain.value = 0; out.gain.setTargetAtTime(1, c.currentTime, 2); out.connect(musBus); nodes.push(out);
+  const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 800; lp.Q.value = .3; lp.connect(out);
+  const lfo = c.createOscillator(), lg = c.createGain(); lfo.frequency.value = .06; lg.gain.value = 300; lfo.connect(lg); lg.connect(lp.frequency); lfo.start(); nodes.push(lfo);
+  const vs = [0, 1, 2].map(() => { const o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(); o.type = 'triangle'; o2.type = 'sine'; o2.detune.value = 8; g.gain.value = 0; o.connect(g); o2.connect(g); g.connect(lp); o.start(); o2.start(); nodes.push(o, o2); return { o, o2, g }; });
+  let ci = 0;
+  const step = () => { const ch = m.chords[ci++ % m.chords.length], n = c.currentTime; vs.forEach((v, i) => { v.o.frequency.setTargetAtTime(ch[i], n, .9); v.o2.frequency.setTargetAtTime(ch[i] / 2, n, .9); v.g.gain.setTargetAtTime(i ? .035 : .05, n, 1.5); }); };
+  step(); timers.push(setInterval(step, 9000));
+  if (m.extra === 'waves') {
+    const s = c.createBufferSource(); s.buffer = brown(); s.loop = true; const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 500; const g = c.createGain(); g.gain.value = .06;
+    const wl = c.createOscillator(), wg = c.createGain(); wl.frequency.value = .11; wg.gain.value = .05; wl.connect(wg); wg.connect(g.gain);
+    s.connect(f); f.connect(g); g.connect(out); s.start(); wl.start(); nodes.push(s, wl);
+  } else if (m.extra === 'box') {
+    const ping = () => { if (!mus) return; const n = c.currentTime, f = m.notes[Math.floor(Math.random() * m.notes.length)]; tone(f, n, 2.6, .025, 'sine', null, out); tone(f * 2, n, 1.2, .006, 'sine', null, out); timers.push(setTimeout(ping, 2500 + Math.random() * 3500)); };
+    timers.push(setTimeout(ping, 1500));
+  } else if (m.extra === 'rail') {
+    const s = c.createBufferSource(); s.buffer = brown(); s.loop = true; const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 140; const g = c.createGain(); g.gain.value = .09; s.connect(f); f.connect(g); g.connect(out); s.start(); nodes.push(s);
+    const clack = () => { if (!mus) return; const n = c.currentTime; [0, .2].forEach(dt => { const b = c.createBufferSource(); b.buffer = brown(); const bf = c.createBiquadFilter(); bf.type = 'bandpass'; bf.frequency.value = 1800; const bg = c.createGain(); bg.gain.setValueAtTime(.0001, n + dt); bg.gain.exponentialRampToValueAtTime(.05, n + dt + .01); bg.gain.exponentialRampToValueAtTime(.0001, n + dt + .09); b.connect(bf); bf.connect(bg); bg.connect(out); b.start(n + dt, Math.random() * 2, .12); }); };
+    timers.push(setInterval(clack, 1700));
+  }
+  mus = { story, nodes, timers };
+}
+function stopMusic() {
+  if (!mus) return; const m = mus; mus = null; m.timers.forEach(t => { clearInterval(t); clearTimeout(t); });
+  const out = m.nodes[0]; try { out.gain.setTargetAtTime(0, AC.currentTime, .4); } catch (e) { }
+  setTimeout(() => m.nodes.forEach(n => { try { n.stop && n.stop(); } catch (e) { } try { n.disconnect(); } catch (e) { } }), 1500);
+}
+function syncMusic() {
+  const want = view === 'room' && on('music') && PREF.mus && audioOn();
+  if (want) { if (!mus || mus.story !== S().story) startMusic(S().story); duck(talking); }
+  else { if (musBus) musBus.gain.setTargetAtTime(0, AC.currentTime, .4); musLevel = 0; if (mus) stopMusic(); }
+}
+let talking = false;
+function duck(t) { talking = t; if (!musBus || !mus) return; const target = t ? .22 : .6; if (Math.abs(target - musLevel) > .01) { musLevel = target; musBus.gain.setTargetAtTime(target, AC.currentTime, t ? .15 : 1.2); } }
+
+/* ---------- المايك والسماعة (من موبايل لموبايل على طول) ---------- */
+var V = { sid: null, pc: null, pair: '', answered: '', mic: null, state: 'off', ra: null, la: null, retry: 0, live: {} };
+const ICE = { iceServers: [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun1.l.google.com:19302'] }].concat(window.TURN_SERVERS || []) };
+const vref = p => db.ref(`rooms/${code}/live/${p}`);
+const rid = () => 's' + Math.random().toString(36).slice(2, 10);
+function voiceStart() {
+  if (!on('voice') || V.sid) return;
+  if (!window.RTCPeerConnection) { V.state = 'nosup'; return; }
+  V.sid = rid(); V.state = 'wait'; register();
+}
+function register() {
+  V.code = code; V.role = role; const r = vref('v/' + role); r.set({ sid: V.sid, at: Date.now(), mic: PREF.mic }).catch(() => { });
+  try { r.onDisconnect().remove(); } catch (e) { }
+}
+function renewSid() { if (!V.sid || !code) return; V.sid = rid(); V.pair = ''; V.answered = ''; register(); }
+function voiceStop() {
+  if (V.pc) try { V.pc.close(); } catch (e) { }
+  if (V.mic) V.mic.getTracks().forEach(t => t.stop());
+  if (V.sid && V.code && db) db.ref(`rooms/${V.code}/live/v/${V.role}`).remove().catch(() => { });
+  Object.assign(V, { sid: null, pc: null, pair: '', answered: '', mic: null, state: 'off', ra: null, la: null, retry: 0, live: {} });
+  PREF.mic = false; RAU.srcObject = null; rxOpen = false; talking = false;
+}
+function makePC(offerer) {
+  if (V.pc) try { V.pc.close(); } catch (e) { }
+  const pc = new RTCPeerConnection(ICE); V.pc = pc;
+  if (offerer) pc.addTransceiver('audio', { direction: 'sendrecv' });
+  pc.ontrack = e => attachRemote(e.streams && e.streams[0] ? e.streams[0] : new MediaStream([e.track]));
+  pc.onconnectionstatechange = () => {
+    if (pc !== V.pc) return; const s = pc.connectionState;
+    V.state = s === 'connected' ? 'on' : s === 'failed' ? 'fail' : s === 'closed' ? 'wait' : 'conn';
+    if (s === 'connected') V.retry = 0;
+    if (s === 'failed' && role === 'guest' && V.retry < 3) { V.retry++; setTimeout(() => { if (V.pc === pc && V.state === 'fail') renewSid(); }, 2500); }
+    renderDock();
+  };
+  return pc;
+}
+const gathered = pc => new Promise(res => { if (pc.iceGatheringState === 'complete') return res(); const t = setTimeout(res, 2500); pc.addEventListener('icegatheringstatechange', () => { if (pc.iceGatheringState === 'complete') { clearTimeout(t); res(); } }); });
+function micToPC() { const t = V.pc && V.pc.getTransceivers()[0]; if (!t) return; try { t.direction = 'sendrecv'; } catch (e) { } if (V.mic) t.sender.replaceTrack(V.mic.getAudioTracks()[0]).catch(() => { }); }
+async function handleLive(live) {
+  V.live = live || {}; handleRx(V.live.rx || {});
+  if (V.sid) {
+    const v = V.live.v || {}, me = v[role], oth = v[OTHER(role)];
+    if (!oth || !oth.sid) {
+      if (V.pc) { try { V.pc.close(); } catch (e) { } V.pc = null; } V.pair = ''; V.answered = ''; V.state = 'wait';
+    } else if (role === 'host' && me && me.sid === V.sid) {
+      const pair = V.sid + '|' + oth.sid;
+      if (V.pair !== pair) {
+        V.pair = pair; const pc = makePC(true); micToPC(); V.state = 'conn';
+        try { await pc.setLocalDescription(await pc.createOffer()); await gathered(pc); if (V.pc === pc) await vref('v/offer').set({ h: V.sid, g: oth.sid, sdp: pc.localDescription.sdp }); }
+        catch (e) { if (V.pc === pc) V.state = 'fail'; }
+      }
+      const a = v.answer;
+      if (a && a.h === V.sid && a.g === oth.sid && V.pc && V.pc.signalingState === 'have-local-offer') { try { await V.pc.setRemoteDescription({ type: 'answer', sdp: a.sdp }); } catch (e) { } }
+    } else if (role === 'guest') {
+      const o = v.offer;
+      if (o && o.g === V.sid && o.h === oth.sid && V.answered !== o.h + '|' + o.g) {
+        V.answered = o.h + '|' + o.g; const pc = makePC(false); V.state = 'conn';
+        try { await pc.setRemoteDescription({ type: 'offer', sdp: o.sdp }); micToPC(); await pc.setLocalDescription(await pc.createAnswer()); await gathered(pc); if (V.pc === pc) await vref('v/answer').set({ h: o.h, g: o.g, sdp: pc.localDescription.sdp }); }
+        catch (e) { if (V.pc === pc) V.state = 'fail'; }
+      }
+    }
+  }
+  renderDock();
+}
+function analyser(stream) { if (!ac()) return null; try { const an = AC.createAnalyser(); an.fftSize = 512; AC.createMediaStreamSource(stream).connect(an); return an; } catch (e) { return null; } }
+function attachRemote(st) {
+  RAU.srcObject = st; RAU.muted = !PREF.spk; RAU.play().catch(() => { });
+  V.ra = analyser(st); levelLoop();
+}
+async function toggleMic() {
+  if (!V.sid) return;
+  if (!V.mic) {
+    try { V.mic = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } }); }
+    catch (e) { flashDock('المايك مقفول. اسمح للعبة تستخدم المايك (من إعدادات الموبايل أو من القفل جنب اللينك).'); return; }
+    V.la = analyser(V.mic); micToPC(); levelLoop();
+  }
+  PREF.mic = !PREF.mic; V.mic.getAudioTracks().forEach(t => { t.enabled = PREF.mic; });
+  vref('v/' + role + '/mic').set(PREF.mic).catch(() => { }); renderDock();
+}
+function toggleSpk() { PREF.spk = !PREF.spk; savePref(); RAU.muted = !PREF.spk; if (PREF.spk && RAU.paused && RAU.srcObject) RAU.play().catch(() => { }); renderDock(); }
+let lvTimer = null;
+function rms(an) { if (!an) return 0; const d = new Uint8Array(an.fftSize); an.getByteTimeDomainData(d); let s = 0; for (let i = 0; i < d.length; i++) { const y = (d[i] - 128) / 128; s += y * y; } return Math.sqrt(s / d.length); }
+function levelLoop() {
+  if (lvTimer) return;
+  lvTimer = setInterval(() => {
+    if (!V.sid) { clearInterval(lvTimer); lvTimer = null; return; }
+    const me = PREF.mic && rms(V.la) > .04, them = PREF.spk && V.state === 'on' && rms(V.ra) > .03;
+    const a = document.getElementById('d-mic'), b = document.getElementById('d-oth');
+    if (a) a.classList.toggle('talk', me); if (b) b.classList.toggle('talk', them);
+    duck(me || them);
+  }, 150);
+}
+
+/* ---------- ردود الفعل ---------- */
+let rxSeen = null, rxLast = 0;
+function liveReset() { rxSeen = null; sw.gid = null; }
+function handleRx(rx) {
+  if (!rxSeen) { rxSeen = { host: (rx.host || {}).at || 0, guest: (rx.guest || {}).at || 0 }; return; }
+  for (const r of ['host', 'guest']) { const x = rx[r]; if (!x || !(x.at > rxSeen[r])) continue; rxSeen[r] = x.at; if (r !== role && on('react') && RX.includes(x.e)) { fly(x.e, r); sfx('pop'); } }
+}
+function sendRx(e) {
+  if (Date.now() - rxLast < 600) return; rxLast = Date.now();
+  fly(e, role); sfx('pop'); vref('rx/' + role).set({ e, at: Date.now() }).catch(() => { });
+}
+function fly(e, r) {
+  const f = el('div', { class: 'fly', 'aria-hidden': 'true', style: `left:${10 + Math.random() * 70}%;filter:drop-shadow(0 0 10px ${r === 'host' ? 'var(--p1)' : 'var(--p2)'})` }, e, el('small', { class: cls(r) }, NAMES()[r]));
+  document.body.append(f); setTimeout(() => f.remove(), 2700);
+}
+
+/* ---------- الشريط اللي تحت ---------- */
+function flashDock(t) { dockMsg = t; clearTimeout(dockMsgT); renderDock(); dockMsgT = setTimeout(() => { dockMsg = ''; renderDock(); }, 6000); }
+function renderDock() {
+  const d = document.getElementById('dock');
+  const show = view === 'room' && !!room && !!S() && (on('voice') || on('react') || on('music') || on('sfx'));
+  document.body.classList.toggle('hasdock', show);
+  if (!show) { d.hidden = true; d.replaceChildren(); return; }
+  d.hidden = false;
+  const oth = OTHER(role), ov = (V.live.v || {})[oth], kids = [];
+  if (rxOpen && on('react')) kids.push(el('div', { class: 'rxbar' }, RX.map((e, i) => el('button', { id: 'rx-' + i, 'aria-label': 'رد فعل ' + e, onclick: () => sendRx(e) }, e))));
+  const row = el('div', { class: 'in' });
+  if (on('voice')) {
+    row.append(
+      el('button', { class: 'ib ' + (PREF.mic ? 'on' : 'off'), id: 'd-mic', 'aria-label': PREF.mic ? 'اقفل المايك' : 'افتح المايك', 'aria-pressed': PREF.mic ? 'true' : 'false', onclick: toggleMic }, '🎤'),
+      el('button', { class: 'ib' + (PREF.spk ? '' : ' off'), id: 'd-spk', 'aria-label': PREF.spk ? 'اكتم صوت ' + NAMES()[oth] : 'شغّل صوت ' + NAMES()[oth], 'aria-pressed': PREF.spk ? 'true' : 'false', onclick: toggleSpk }, '🔈'));
+  }
+  // سطر الحالة
+  let l1 = '', retry = null;
+  if (dockMsg) l1 = dockMsg;
+  else if (!audioOn() && (on('music') || on('sfx') || on('voice'))) l1 = '🔊 اضغط في أي حتة عشان الصوت يشتغل';
+  else if (on('voice')) {
+    l1 = { nosup: 'الجهاز ده مش بيدعم المايك', wait: 'مستنيين ' + NAMES()[oth] + ' يفتح اللعبة', conn: 'بيوصّل الصوت…', on: '🟢 الصوت متوصل', fail: 'الصوت ما وصلش', off: '' }[V.state] || '';
+    if (V.state === 'wait' && G(oth)) l1 = 'مستنيين ' + NAMES()[oth] + ' تفتح اللعبة';
+    if (V.state === 'fail') retry = el('button', { id: 'd-retry', onclick: () => { V.retry = 0; renewSid(); V.state = 'conn'; renderDock(); } }, 'جرّب تاني');
+  }
+  const vs = el('div', { class: 'vs', 'aria-live': 'polite' }, el('div', { class: 'l1' }, l1, retry));
+  if (on('voice') && ov && ov.sid && !dockMsg) vs.append(el('div', null, el('span', { class: 'od', id: 'd-oth' }), el('b', { class: cls(oth) }, NAMES()[oth]), ov.mic ? (G(oth) ? ' فاتحة المايك 🎤' : ' فاتح المايك 🎤') : (G(oth) ? ' قافلة المايك' : ' قافل المايك')));
+  row.append(vs);
+  if (on('music')) row.append(el('button', { class: 'ib' + (PREF.mus ? '' : ' off'), id: 'd-mus', 'aria-label': PREF.mus ? 'اقفل الموسيقى' : 'شغّل الموسيقى', onclick: () => { PREF.mus = !PREF.mus; savePref(); syncMusic(); renderDock(); } }, '🎵'));
+  if (on('sfx')) row.append(el('button', { class: 'ib' + (PREF.sfx ? '' : ' off'), id: 'd-sfx', 'aria-label': PREF.sfx ? 'اقفل المؤثرات' : 'شغّل المؤثرات', onclick: () => { PREF.sfx = !PREF.sfx; savePref(); renderDock(); } }, '🔔'));
+  if (on('react')) row.append(el('button', { class: 'ib' + (rxOpen ? ' on' : ''), id: 'd-rx', 'aria-label': 'ردود الفعل', 'aria-expanded': rxOpen ? 'true' : 'false', onclick: () => { rxOpen = !rxOpen; renderDock(); } }, '😊'));
+  kids.push(row);
+  const fid = document.activeElement && d.contains(document.activeElement) && document.activeElement.id;
+  d.replaceChildren(...kids);
+  if (fid && document.getElementById(fid)) document.getElementById(fid).focus();
+  levelLoopRefresh();
+}
+function levelLoopRefresh() { if (V.sid && (V.la || V.ra)) levelLoop(); }
 
 /* ===================== تشغيل ===================== */
 render();
